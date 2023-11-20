@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Alphonsus Primary School.</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+</head>
+<h2><u>Dinner Money</u></h2>
+<h3>Enter Amount below:</h3>
+
+<script>
+     document.getElementById("myForm").addEventListener("submit", validateForm);
+        function validateForm() {
+     var pupil_id = document.forms["myForm"]["pupil_id"].value;
+     var amount = document.forms["myForm"]["amount"].value;
+
+     if (pupil_id === "") {
+                alert("Pupil ID must be filled out");
+                return false;
+            }
+            
+        
+
+
+
+    }
+    </script>
+
+<body>
+ <form id="myForm" onsubmit="return validateForm()" action="dinner db.php" method="post">
+        <label for="pupil_id">Pupil ID:</label>
+        <input type="number" name="pupil_id" id="pupil_id" required placeholder="Pupil ID"><br>
+        <br>
+        <label for="amount">Amount:</label>
+        <input type="number" step=".01" name="amount" id="amount" required placeholder="Amount">
+
+        <br><p style="opacity: 50%;">Put value amount 0 to view amount</p>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+

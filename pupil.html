@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Alphonsus Primary School.</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+</head>
+    <h2><u>Pupil Signup</u></h2>
+    <h3>Insert Details Below:</h3>
+<body>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", validateForm);
+        function validateForm() {
+            var fname = document.forms["myForm"]["fname"].value;
+            var lname = document.forms["myForm"]["lname"].value;
+            var classid = document.forms["myForm"]["classid"].value;
+            var address = document.forms["myForm"]["address"].value;
+            var birthday = document.forms["myForm"]["birthday"].value;
+            var nameRegex = /^[A-Za-z\s]+$/;
+    
+            if (fname === "") {
+                alert("First name must be filled out");
+                return false;
+            }
+    
+            if (!nameRegex.test(fname)) {
+                alert("First name must contain only letters and spaces");
+                return false;
+            }
+    
+            if (lname === "") {
+                alert("Last name must be filled out");
+                return false;
+            }
+    
+            if (!nameRegex.test(lname)) {
+                alert("Last name must contain only letters and spaces");
+                return false;
+            }
+    
+            if (classid === "class") {
+                alert("Please select a class.");
+                return false;
+            }
+    
+            if (address === "") {
+                alert("Please put in your address");
+                return false;
+            }
+    
+            if (birthday === "") {
+                alert("Please put in your date of birth");
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
+
+    
+    <form id="myForm" onsubmit="return validateForm()" action="schooldb.php" method="post">
+        <label for="fname">First Name:</label>
+        <input type="text" name="fname" id="fname" required placeholder="First Name"><br>
+<br>
+        <label for="lname">Last Name:</label>
+        <input type="text" name="lname" id="lname" required placeholder="Last Name"><br>
+<br>
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address" required placeholder="Address"><br>
+<br>
+        <label for="birthday">Birthday:</label>
+        <input type="date" name="birthday" id="birthday" required placeholder="Birthday"><br>
+<br>
+        <label for="classid">Class:</label>
+        <select name="classid" id="classid" required>
+        <option value="class">class</option>    
+        <option value="class 1">class 1</option>
+        <option value="class 2">class 2</option>
+        <option value="class 3">class 3</option>
+        <option value="class 4">class 4</option>
+        <option value="class 5">class 5</option>
+        <option value="class 6">class 6</option>
+        <option value="class 7">class 7</option>
+        </select><br>
+<br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
