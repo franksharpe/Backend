@@ -6,27 +6,64 @@
     <title>St Alphonsus Primary School.</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
-<h4><u>Please Choose From Below:</u></h4>
+<h4><u>Please enter details:</u></h4>
 <body>
-    <form action="" method="post">
-       
+  
 <script>
-function updateLink(value) {
-  if (value === "fr") {
-    document.getElementById("next").setAttribute('onclick', "location.href='libary.html'");
-  } else if (value === "ex") {
-    document.getElementById("next").setAttribute('onclick', "location.href='dinner.html'");
-}
-}
-</script>
-
-<form>
-    <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> Libary<br><br>
-    <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Dinner<br><br>
-
-    <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
-  </form>
-
+    function updateLink() {
+        var fname = document.getElementById("fname").value;
+        var pupilId = document.getElementById("pupilId").value;
+    
+        // Validate that both fname and pupilId are not empty
+        if (fname.trim() === "" || pupilId.trim() === "") {
+            alert("Please enter both First Name and Pupil ID.");
+            return;
+        }
+    
+        // Perform AJAX request or fetch operation to check if the entered details match records in the database
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var isValid = JSON.parse(xhr.responseText);
+    
+                    if (isValid) {
+                        // Navigate to the desired link if validation is successful
+                        var selectedValue = document.querySelector('input[name="cand"]:checked').value;
+                        if (selectedValue === "fr") {
+                            location.href = 'libary.html';
+                        } else if (selectedValue === "ex") {
+                            location.href = 'dinner.html';
+                        }
+                    } else {
+                        alert("Invalid First Name or Pupil ID. Please check your details.");
+                    }
+                } else {
+                    alert("Error checking pupil details. Please try again later.");
+                }
+            }
+        };
+    
+        xhr.open("POST", "validate_details.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("fname=" + encodeURIComponent(fname) + "&pupilId=" + encodeURIComponent(pupilId));
+    }
+    </script>
+  </script>
+  <form>
+    
    
-</body>
+      <label for="fname">First Name:</label>
+      <input type="text" name="fname" id="fname" required><br><br>
+  
+      <label for="pupilId">Pupil ID:</label>
+      <input type="text" name="pupilId" id="pupilId" required><br><br>
+      <h5>Choose option:</h5>
+      <input type="radio" name="cand" value="fr"> Library<br><br>
+      <input type="radio" name="cand" value="ex"> Dinner<br><br>
+  
+      <input type="button" onclick="updateLink()" value="Next" />
+  </form>
+  
+  </body>
 </html>
