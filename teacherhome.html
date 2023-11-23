@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Alphonsus Primary School.</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+</head>
+    <h3><u>Please Choose Below:</u></h3>
+<body>
+
+<script>
+function updateLink(value) {
+    if (value === "fr") {
+        document.getElementById("next").setAttribute('onclick', "location.href='teacher.html'");
+    } else if (value === "ex") {
+        document.getElementById("next").setAttribute('onclick', "location.href='view.php'")
+    }
+}
+        </script>
+
+<body>
+
+<form>
+    <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Teacher<br><br>
+    <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> View Records<br><br>
+    <input id="next" type="button" value="Next" />
+</form>
+
+   
+</body>
+</html>
