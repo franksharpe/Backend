@@ -12,8 +12,6 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-// Get form data
 $pupil_id = $_POST['pupil_id'];
 $amount = $_POST['amount'];
 
@@ -37,7 +35,7 @@ if ($result->num_rows > 0) {
             // Update the dinner_id in the pupils table
             $updatePupilsSQL = "UPDATE pupils SET dinner_id = '$dinner_id' WHERE pupil_id = '$pupil_id'";
             if ($conn->query($updatePupilsSQL) === TRUE) {
-                echo "Amount updated successfully for pupil_id: $pupil_id.<br> Current Amount: £$money";
+                echo "Amount updated successfully for pupil_id: $pupil_id<br> Current Amount: £$money";
             } else {
                 echo "Error updating " . $conn->error;
             }
@@ -50,9 +48,17 @@ if ($result->num_rows > 0) {
 } else {
     // If no record exists, insert a new record
     $insertDataSQL = "INSERT INTO money (pupil_id, amount) VALUES ('$pupil_id', '$amount')";
-    $updatePupilsSQL = "UPDATE pupils SET dinner_id = '$dinner_id' WHERE pupil_id = '$pupil_id'";
     if ($conn->query($insertDataSQL) === TRUE) {
-        echo "Data inserted successfully for pupil_id: $pupil_id <br> Amount: £$amount";
+        // Get the last inserted dinner_id
+        $dinner_id = $conn->insert_id;
+
+        // Update the dinner_id in the pupils table
+        $updatePupilsSQL = "UPDATE pupils SET dinner_id = '$dinner_id' WHERE pupil_id = '$pupil_id'";
+        if ($conn->query($updatePupilsSQL) === TRUE) {
+            echo "Data inserted successfully for pupil_id: $pupil_id <br> Amount: £$amount";
+        } else {
+            echo "Error updating dinner_id " . $conn->error;
+        }
     } else {
         echo "Error inserting data " . $conn->error;
     }
@@ -60,4 +66,3 @@ if ($result->num_rows > 0) {
 
 // Close connection
 $conn->close();
-?>
