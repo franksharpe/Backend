@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
             // Update the dinner_id in the pupils table
             $updatePupilsSQL = "UPDATE pupils SET dinner_id = '$dinner_id' WHERE pupil_id = '$pupil_id'";
             if ($conn->query($updatePupilsSQL) === TRUE) {
-                echo "Amount updated successfully for pupil_id: $pupil_id<br> Current Amount: £$money";
+                echo "Amount updated successfully for pupil ID: $pupil_id<br> Current Amount: £$money";
             } else {
                 echo "Error updating " . $conn->error;
             }

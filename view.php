@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School.</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+    <h3><u>Pupils Record</u></h3>
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
+            
         }
 
         th, td {
@@ -18,7 +20,10 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #ba8023;
+        }
+        body{
+            background-color: #4492A9;
         }
     </style>
 </head>
@@ -45,9 +50,30 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Output data in a table
     echo "<table>";
-    echo "<tr><th>ID</th><th>Class ID</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Dinner ID</th><th>Book ID</th><th>Birthday</th><th>Medical ID</th></tr>";
+    echo "
+    <tr>
+    <th>ID</th>
+    <th>Class ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Address</th>
+    <th>Dinner ID</th>
+    <th>Book ID</th>
+    <th>Birthday</th>
+    <th>Medical ID</th>
+    </tr>";
     while ($row = $result->fetch_assoc()) {
-        echo "<tr><td>{$row['pupil_id']}</td><td>{$row['classid']}</td><td>{$row['fname']}</td><td>{$row['lname']}</td><td>{$row['address']}</td><td>{$row['dinner_id']}</td><td>{$row['book_id']}</td><td>{$row['birthday']}</td><td>{$row['medical_id']}</td></tr>";
+        echo "<tr>
+        <td>{$row['pupil_id']}</td>
+        <td>{$row['classid']}</td>
+        <td>{$row['fname']}</td>
+        <td>{$row['lname']}</td>
+        <td>{$row['address']}</td>
+        <td>{$row['dinner_id']}</td>
+        <td>{$row['book_id']}</td>
+        <td>{$row['birthday']}</td>
+        <td>{$row['medical_id']}</td>
+        </tr>";
     }
     echo "</table>";
 } else {
