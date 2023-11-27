@@ -26,6 +26,32 @@
         body{
             background-color: #F1F1F1;
         }
+        .updateButton {
+            background-color: #ff6f6f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 2px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .addTaButton{
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 2px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -59,6 +85,8 @@ if ($result->num_rows > 0) {
     <th>Address</th>
     <th>Phone Number</th>
     <th>Teaching Assistant</th>
+    <th>Remove</th>
+    <th>Add</th>
     </tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>

@@ -8,32 +8,51 @@
 </head>
     <h3><u>Please Choose Below:</u></h3>
 <body>
-
-<script>
-   function updateLink(value) {
+    <script>
+        function updateLink(value) {
             if (value === "fr") {
-                document.getElementById("next").setAttribute('onclick', "location.href='index.php'");
+                document.getElementById("next").setAttribute('onclick', "checkPasswordAndRedirect('index.php', 'teacher')");
             } else if (value === "ex") {
                 document.getElementById("next").setAttribute('onclick', "location.href='view.php'");
             } else if (value === "yt") {
-                
                 document.getElementById("next").setAttribute('onclick', "location.href='money.php'");
             } else if (value === "tt") {
-                
                 document.getElementById("next").setAttribute('onclick', "location.href='libary.php'");
+            } else if (value === "rt") {
+                document.getElementById("next").setAttribute('onclick', "checkPasswordAndRedirect('viewparents.php','parent')");
+            } else if (value === "e") {
+                document.getElementById("next").setAttribute('onclick', "location.href='medicalview.php'");
+            } else if (value === "y") {
+                document.getElementById("next").setAttribute('onclick', "location.href='classview.php'");
             }
         }
-        </script>
+    
+        function checkPasswordAndRedirect(destination, role) {
+            var password = prompt("Please enter the password:");
+    
+            var teacherPassword = "record";
+            var parentPassword = "parent";  
+    
+            if ((role === 'teacher' && password === teacherPassword) || (role === 'parent' && password === parentPassword)) {
+                location.href = destination;
+            } else {
+                alert("Incorrect password. Access denied.");
+            }
+        }
+    </script>
+    <body>
+    <form>
+        <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)">Teacher Records<br><br>
+        <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)">Pupil Records<br><br>
+        <input type="radio" name="cand" value="tt" onclick="updateLink(this.value)">Libary Records<br><br>
+        <input type="radio" name="cand" value="yt" onclick="updateLink(this.value)">Dinner Money Records<br><br>
+        <input type="radio" name="cand" value="rt" onclick="updateLink(this.value)">Parents Records<br><br>
+        <input type="radio" name="cand" value="e" onclick="updateLink(this.value)">Medical Records<br><br>
+        <input type="radio" name="cand" value="y" onclick="updateLink(this.value)">Class Records<br><br>
+        <input id="next" type="button" value="Next" />
+    </form>
+    
 
-<body>
-
-<form>
-    <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)">Teacher Records<br><br>
-    <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)">Pupil Records<br><br>
-    <input type="radio" name="cand" value="tt" onclick="updateLink(this.value)">Libary Records<br><br>
-    <input type="radio" name="cand" value="yt" onclick="updateLink(this.value)">Dinner Money Records<br><br>
-    <input id="next" type="button" value="Next" />
-</form>
 
    
 </body>
