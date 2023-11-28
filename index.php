@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St Alphonsus Primary School.</title>
+    <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
-    <h2>Teacher Records</h2>
-    <h3><u>Teachers:</u></h3>
     <style>
-        table {
-            border-collapse: collapse;
+        .table-container {
             width: 100%;
-            
+            margin-top: 20px;
         }
 
-        th, td {
+        .school-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .school-table th, .school-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
 
-        th {
+        .school-table th {
             background-color: #1C4E80;
+            color: black;
         }
-        body{
+
+        body {
             background-color: #F1F1F1;
+            font-family: Arial, sans-serif;
         }
+
         .updateButton {
             background-color: #ff6f6f;
             color: white;
@@ -39,7 +45,8 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .addTaButton{
+
+        .addTaButton {
             background-color: green;
             color: white;
             border: none;
@@ -52,9 +59,15 @@
             cursor: pointer;
             border-radius: 4px;
         }
+        .highlight {
+            background-color: yellow;  
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+
+<h3><u>Class Record</u></h3>
 
 <?php
 // Connect to MySQL server
@@ -70,79 +83,73 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to retrieve teacher data
-$sql = "SELECT teacherid, fname, lname, address, phone, ta_id FROM teachers";
-$result = $conn->query($sql);
+// Handle Remove Teacher ID
+if (isset($_GET['action']) && $_GET['action'] === 'remove_teacher' && isset($_GET['classid'])) {
+    $classId = $_GET['classid'];
 
-if ($result->num_rows > 0) {
-    // Output data for teachers in a table
-    echo "<table>";
-    echo "
-    <tr>
-    <th>ID</th>
-    <th>First name</th>
-    <th>Last Name</th>
-    <th>Address</th>
-    <th>Phone Number</th>
-    <th>Teaching Assistant</th>
-    <th>Remove</th>
-    <th>Add</th>
-    </tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-        <td>{$row['teacherid']}</td>
-        <td>{$row['fname']}</td>
-        <td>{$row['lname']}</td>
-        <td>{$row['address']}</td>
-        <td>{$row['phone']}</td>
-        <td>{$row['ta_id']}</td>
-        <td><button class='updateButton' data-teacherid='{$row['teacherid']}'>Remove TA</button></td>
-        <td>
-        <form id='addTaForm{$row['teacherid']}'>
-            <label for='taIdInput{$row['teacherid']}'>Enter TA ID:</label>
-            <input type='text' id='taIdInput{$row['teacherid']}' name='taIdInput{$row['teacherid']}'>
-            <button type='button' class='addTaButton' data-teacherid='{$row['teacherid']}'>Add TA</button>
-        </form>
-        </td>
-        </tr>";
+    // Update the teacherid to null in the classes table
+    $updateSql = "UPDATE classes SET teacherid = NULL WHERE classid = $classId";
+    if ($conn->query($updateSql) === TRUE) {
+        echo "<script>alert('Teacher ID removed successfully.');</script>";
+    } else {
+        echo "<script>alert('Error removing Teacher ID: " . $conn->error . "');</script>";
     }
-    echo "</table>";
-} else {
-    echo "0 results";
 }
 
+// Handle Add Teacher ID
+if (isset($_POST['classid']) && isset($_POST['teacherid'])) {
+    $classId = $_POST['classid'];
+    $teacherId = $_POST['teacherid'];
 
-// Output text between tables
-echo "<h3><u>Teaching Assistants:</u></h3>";
+    // Update the teacherid in the classes table
+    $updateSql = "UPDATE classes SET teacherid = $teacherId WHERE classid = $classId";
+    if ($conn->query($updateSql) === TRUE) {
+        echo "<script>alert('Teacher ID added successfully.');</script>";
+    } else {
+        echo "<script>alert('Error adding Teacher ID: " . $conn->error . "');</script>";
+    }
+}
 
-// Free the result set
-$result->free_result();
-
-// Second Query to retrieve teaching assistant data
-$sql = "SELECT ta_id, fname, lname, address, phone FROM ta";
+// Query to retrieve pupils data
+$sql = "SELECT classid, class_name, teacherid, class_capacity FROM classes";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Output data for teaching assistants in a table
-    echo "<table>";
+    // Output data in a table
+    echo "<div class='table-container' , table id='pupilsTable'>";
+    echo "<table class='school-table'>";
     echo "
     <tr>
     <th>ID</th>
-    <th>First name</th>
-    <th>Last Name</th>
-    <th>Address</th>
-    <th>Phone Number</th>
+    <th>Class Name</th>
+    <th>Teacher ID</th>
+    <th>Class Capacity</th>
+    <th>Remove Teacher ID</th>
+    <th>Add Teacher ID</th>
     </tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td>{$row['ta_id']}</td>
-        <td>{$row['fname']}</td>
-        <td>{$row['lname']}</td>
-        <td>{$row['address']}</td>
-        <td>{$row['phone']}</td>
+        <td>{$row['classid']}</td>
+        <td>{$row['class_name']}</td>
+        <td class='dinnerIdCell' data-id='{$row['teacherid']}'>{$row['teacherid']}</td>
+        <td>{$row['class_capacity']}</td>
+        <td>
+    <button class='updateButton' onclick=\"location.href='classview.php?action=remove_teacher&classid={$row['classid']}'\">
+        Remove
+    </button>
+</td>
+<td>
+    <form method='post'>
+        <input type='hidden' name='classid' value='{$row['classid']}'>
+        <label for='teacherIdInput{$row['classid']}'>Enter Teacher ID:</label>
+        <input type='text' id='teacherIdInput{$row['classid']}' name='teacherid'>
+        <button type='submit' class='addTaButton'>Add</button>
+    </form>
+</td>
         </tr>";
     }
     echo "</table>";
+    echo "</div>";
 } else {
     echo "0 results";
 }
@@ -151,68 +158,31 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-<!-- Script to handle the button click event -->
 <script>
-    // Add an event listener to all buttons with the class 'updateButton'
-    document.querySelectorAll(".updateButton").forEach(function(button) {
-        button.addEventListener("click", function() {
-            // Get the teacherid from the button's data attribute
-            var teacherId = this.getAttribute('data-teacherid');
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('pupilsTable').addEventListener('click', function (event) {
+            var target = event.target;
 
-            // Send an AJAX request to update the database and set the column to null
-            fetch("update_database.php?teacherid=" + teacherId)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    console.log(data);  // Log the response for debugging
-                    // Reload the page to reflect changes in the table
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error during update:', error);
+            // Check if the clicked cell has the correct class
+            if (target.classList.contains('dinnerIdCell')) {
+                // Remove the 'highlight' class from all cells in the table
+                var cells = document.querySelectorAll('.dinnerIdCell');
+                cells.forEach(function (cell) {
+                    cell.classList.remove('highlight');
                 });
-        });
-    });
 
-    // Add an event listener to all buttons with the class 'addTaButton'
-    document.querySelectorAll(".addTaButton").forEach(function(button) {
-        button.addEventListener("click", function() {
-            // Get the teacherid from the button's data attribute
-            var teacherId = this.getAttribute('data-teacherid');
+                // Highlight the selected cell
+                target.classList.add('highlight');
 
-            // Get the TA ID from the input field
-            var taId = document.getElementById('taIdInput' + teacherId).value;
-
-            // Validate that TA ID is not empty
-            if (taId.trim() === '') {
-                alert('Please enter a valid TA ID.');
-                return;
+                // Redirect to the appropriate page with the selected ID after a short delay
+                var url = 'index.php';
+                setTimeout(function () {
+                    window.location.href = url + '?selectedId=' + target.getAttribute('data-id');
+                }, 100);
             }
-
-            // Send an AJAX request to update the database and set ta_id to the provided value
-            fetch("add_ta.php?teacherid=" + teacherId + "&taId=" + taId)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    console.log(data);  // Log the response for debugging
-                    // Reload the page to reflect changes in the table
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error during addition:', error);
-                });
         });
     });
 </script>
-
 
 </body>
 </html>

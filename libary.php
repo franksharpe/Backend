@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St Alphonsus Primary School - Library Records</title>
+    <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Library Records</u></h3>
     <style>
@@ -46,7 +46,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+echo "</br>";  
+echo '<a href="libary.html"><button>Add New</button></a><br>';
+echo "</br>";  
+echo "</br>"; 
 // Get the selected book ID from the AJAX request
 $selectedBookId = isset($_GET['selectedId']) ? $_GET['selectedId'] : null;
 

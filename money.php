@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St Alphonsus Primary School - Money Records</title>
+    <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Money Records</u></h3>
     <style>
@@ -32,6 +32,7 @@
     </style>
 </head>
 <body>
+
 <?php
 // Connect to MySQL server
 $servername = "127.0.0.1";
@@ -45,19 +46,25 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+echo "</br>";  
+echo '<a href="dinner.html"><button>Add New</button></a><br>';
+echo "</br>";  
+echo "</br>"; 
 // Get the selected dinner ID from the AJAX request or URL parameter
-$selectedDinnerId = isset($_GET['selectedId']) ? $_GET['selectedId'] : null;
+$selectedDinnerId = isset($_GET['selectedId']) ? intval($_GET['selectedId']) : null;
 
-// Query to check if the selected dinner ID exists in the money table
-$sql = "SELECT dinner_id FROM money WHERE dinner_id = $selectedDinnerId";
-$result = $conn->query($sql);
+// Check if $selectedDinnerId is a valid integer before using it in the query
+if (!is_null($selectedDinnerId) && is_int($selectedDinnerId)) {
+    // Query to check if the selected dinner ID exists in the money table
+    $sql = "SELECT dinner_id FROM money WHERE dinner_id = $selectedDinnerId";
+    $result = $conn->query($sql);
 
-// Output highlighting or not based on the result
-if ($result && $result->num_rows > 0) {
-    echo "<style>.highlight { background-color: yellow; }</style>";
-} else {
-    echo "<style>.highlight { background-color: transparent; }</style>";
+    // Output highlighting or not based on the result
+    if ($result && $result->num_rows > 0) {
+        echo "<style>.highlight { background-color: yellow; }</style>";
+    } else {
+        echo "<style>.highlight { background-color: transparent; }</style>";
+    }
 }
 
 // Query to retrieve pupils data
@@ -89,6 +96,7 @@ if ($result->num_rows > 0) {
 // Close connection
 $conn->close();
 ?>
+
 
 </body>
 </html>

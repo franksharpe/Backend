@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St Alphonsus Primary School.</title>
+    <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Parents Records</u></h3>
     <style>
@@ -68,7 +68,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+echo "</br>";  
+echo '<a href="parent.html"><button>Add New Parent</button></a><br>';
+echo "</br>";  
+echo "</br>"; 
 // Check if a pupil_id removal request is received
 if (isset($_GET['removePupilId'])) {
     $parentId = $_GET['removePupilId'];

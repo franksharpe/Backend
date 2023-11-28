@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St Alphonsus Primary School.</title>
+    <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Pupils Record</u></h3>
 <body>
@@ -27,7 +27,7 @@
         }
 
         .highlight {
-            background-color: yellow;  /* You can change this to the desired highlight color */
+            background-color: yellow;  
             cursor: pointer;
         }
     </style>
@@ -45,7 +45,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+echo "</br>";  
+echo '<a href="pupil.html"><button>Add New Pupil</button></a><br>';
+echo "</br>";  
+echo "</br>";  
 // Query to retrieve pupils data
 $sql = "SELECT pupil_id, classid, fname, lname, address, dinner_id, book_id, birthday, medical_id, parent_count FROM pupils";
 $result = $conn->query($sql);
