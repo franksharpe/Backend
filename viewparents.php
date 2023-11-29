@@ -38,7 +38,7 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .ard{
+        .ard {
             background-color: green;
             color: white;
             border: none;
@@ -51,9 +51,28 @@
             cursor: pointer;
             border-radius: 4px;
         }
+        .highlight {
+            background-color: yellow;  
+            cursor: pointer;
+        }
+        #find-bar {
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
+
+<div id="find-bar">
+    <input type="text" id="search-input" placeholder="Type to search">
+    <button onclick="findText()">Find</button>
+    <button onclick="clearHighlights()">Clear</button>
+</div>
 
 <?php
 // Connect to MySQL server
@@ -100,8 +119,8 @@ $sql = "SELECT Parent_id, fname, lname, phone, pupil_id FROM parents";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Output data in a table
-    echo "<table>";
+    // Output data in a table with the id 'parentsTable'
+    echo "<table id='parentsTable'>";
     echo "
     <tr>
     <th>ID</th>
@@ -167,6 +186,45 @@ $conn->close();
                 });
         });
     });
+
+    function findText() {
+        var searchText = document.getElementById('search-input').value.toLowerCase();
+        var parentsTable = document.getElementById('parentsTable');
+        var tableRows = parentsTable.getElementsByTagName('tr');
+
+        for (var i = 1; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var cells = row.getElementsByTagName('td');
+            var found = false;
+
+            for (var j = 0; j < cells.length; j++) {
+                var cell = cells[j];
+                var cellText = cell.innerText.toLowerCase() || cell.textContent.toLowerCase();
+
+                if (cellText.indexOf(searchText) > -1) {
+                    found = true;
+                    cell.classList.add('highlight');
+                } else {
+                    cell.classList.remove('highlight');
+                }
+            }
+
+            if (found) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+
+    function clearHighlights() {
+        var parentsTable = document.getElementById('parentsTable');
+        var tableCells = parentsTable.getElementsByTagName('td');
+
+        for (var i = 0; i < tableCells.length; i++) {
+            tableCells[i].classList.remove('highlight');
+        }
+    }
 </script>
 
 </body>

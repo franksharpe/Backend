@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
-    <h3><u>Pupils Record</u></h3>
-<body>
-<style>
+    <style>
         table {
             border-collapse: collapse;
             width: 100%;
@@ -30,7 +28,26 @@
             background-color: yellow;  
             cursor: pointer;
         }
+        #find-bar {
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 5px;
+        }
     </style>
+</head>
+<body>
+
+<h3><u>Pupils Record</u></h3>
+
+<div id="find-bar">
+    <input type="text" id="search-input" placeholder="Type to search">
+    <button onclick="findText()">Find</button>
+    <button onclick="clearHighlights()">Clear</button>
+</div>
 
 <?php
 // Connect to MySQL server
@@ -54,7 +71,7 @@ $sql = "SELECT pupil_id, classid, fname, lname, address, dinner_id, book_id, bir
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Output data in a table
+    // Output data in a table with the id 'pupilsTable'
     echo "<table id='pupilsTable'>";
     echo "
     <tr>
@@ -111,6 +128,45 @@ $conn->close();
             }
         });
     });
+
+    function findText() {
+        var searchText = document.getElementById('search-input').value;
+        var pupilsTable = document.getElementById('pupilsTable');
+        var searchRegex = new RegExp(searchText, 'gi');
+
+        var tableRows = pupilsTable.getElementsByTagName('tr');
+
+        for (var i = 1; i < tableRows.length; i++) { // Start from 1 to skip the header row
+            var row = tableRows[i];
+            var cells = row.getElementsByTagName('td');
+
+            for (var j = 0; j < cells.length; j++) {
+                var cell = cells[j];
+                var cellText = cell.innerText || cell.textContent;
+
+                if (searchRegex.test(cellText)) {
+                    cell.classList.add('highlight');
+                } else {
+                    cell.classList.remove('highlight');
+                }
+            }
+            
+            if (found) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+
+    function clearHighlights() {
+        var pupilsTable = document.getElementById('pupilsTable');
+        var tableCells = pupilsTable.getElementsByTagName('td');
+
+        for (var i = 0; i < tableCells.length; i++) {
+            tableCells[i].classList.remove('highlight');
+        }
+    }
 </script>
 
 </body>

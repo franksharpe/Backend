@@ -21,18 +21,34 @@
         th {
             background-color: #1C4E80;
         }
+
         body {
             background-color: #F1F1F1;
         }
 
         .highlight {
-            background-color: yellow;  
+            background-color: yellow;
             cursor: pointer;
         }
-    </style>
 
+        #find-bar {
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
+
+<div id="find-bar">
+    <input type="text" id="search-input" placeholder="Type to search">
+    <button onclick="findText()">Find</button>
+    <button onclick="clearHighlights()">Clear</button>
+</div>
 
 <?php
 // Connect to MySQL server
@@ -54,7 +70,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // Output data in a table
-    echo "<table>";
+    echo "<table id='medicalTable'>";
     echo "
     <tr>
     <th>ID</th>
@@ -76,6 +92,49 @@ if ($result->num_rows > 0) {
 // Close connection
 $conn->close();
 ?>
+
+<script>
+    // Function to find and highlight text in the table
+    function findText() {
+        var searchText = document.getElementById('search-input').value.toLowerCase();
+        var medicalTable = document.getElementById('medicalTable');
+        var rows = medicalTable.getElementsByTagName('tr');
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var cells = row.getElementsByTagName('td');
+            var found = false;
+
+            for (var j = 0; j < cells.length; j++) {
+                var cell = cells[j];
+                var text = cell.textContent.toLowerCase();
+
+                if (text.includes(searchText)) {
+                    found = true;
+                    cell.classList.add('highlight');
+                } else {
+                    cell.classList.remove('highlight');
+                }
+            }
+
+            if (found) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+
+    // Function to clear the highlights
+    function clearHighlights() {
+        var medicalTable = document.getElementById('medicalTable');
+        var cells = medicalTable.getElementsByTagName('td');
+
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].classList.remove('highlight');
+        }
+    }
+</script>
 
 </body>
 </html>

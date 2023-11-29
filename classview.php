@@ -59,6 +59,7 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .highlight {
             background-color: yellow;  
             cursor: pointer;
@@ -131,7 +132,7 @@ if ($result->num_rows > 0) {
         echo "<tr>
         <td>{$row['classid']}</td>
         <td>{$row['class_name']}</td>
-        <td class='dinnerIdCell' data-id='{$row['teacherid']}'>{$row['teacherid']}</td>
+        <td class='teacherIdCell' data-id='{$row['teacherid']}'>{$row['teacherid']}</td>
         <td>{$row['class_capacity']}</td>
         <td>
     <button class='updateButton' onclick=\"location.href='classview.php?action=remove_teacher&classid={$row['classid']}'\">
@@ -164,14 +165,21 @@ $conn->close();
             var target = event.target;
 
             // Check if the clicked cell has the correct class
-            if (target.classList.contains('dinnerIdCell')) {
+            if (target.classList.contains('teacherIdCell')) {
+                // Remove the 'highlight' class from all cells in the table
+                var cells = document.querySelectorAll('.teacherIdCell');
+                cells.forEach(function (cell) {
+                    cell.classList.remove('highlight');
+                });
+
                 // Highlight the selected cell
                 target.classList.add('highlight');
 
                 // Redirect to the appropriate page with the selected ID after a short delay
                 var url = 'index.php';
+                var selectedId = target.getAttribute('data-id');
                 setTimeout(function () {
-                    window.location.href = url + '?selectedId=' + target.getAttribute('data-id');
+                window.location.href = `${url}?selectedId=${selectedId}`;
                 }, 100);
             }
         });

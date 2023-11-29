@@ -26,12 +26,28 @@
         }
 
         .highlight {
-            background-color: yellow;  /* You can change this to the desired highlight color */
+            background-color: yellow;
             cursor: pointer;
+        }
+
+        #find-bar {
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 5px;
         }
     </style>
 </head>
 <body>
+
+<div id="find-bar">
+    <input type="text" id="search-input" placeholder="Type to search">
+    <button onclick="findText()">Find</button>
+    <button onclick="clearHighlights()">Clear</button>
+</div>
 
 <?php
 // Connect to MySQL server
@@ -82,10 +98,10 @@ if ($result->num_rows > 0) {
     </tr>";
     while ($row = $result->fetch_assoc()) {
         $highlightClass = ($selectedDinnerId !== null && $selectedDinnerId == $row['dinner_id']) ? 'highlight' : '';
-        echo "<tr>
-        <td class='$highlightClass'>{$row['dinner_id']}</td>
-        <td class='$highlightClass'>{$row['pupil_id']}</td>
-        <td class='$highlightClass'>{$row['amount']}</td>
+        echo "<tr class='$highlightClass'>
+        <td>{$row['dinner_id']}</td>
+        <td>{$row['pupil_id']}</td>
+        <td>{$row['amount']}</td>
         </tr>";
     }
     echo "</table>";
@@ -97,6 +113,40 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
+<!-- Script to handle the find bar -->
+<script>
+    function findText() {
+        var searchText = document.getElementById('search-input').value;
+        var rows = document.querySelectorAll('table tr');
+
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var cells = row.getElementsByTagName('td');
+            var found = false;
+
+            for (var j = 0; j < cells.length; j++) {
+                var cell = cells[j];
+                if (cell.innerHTML.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                row.classList.add('highlight');
+            } else {
+                row.classList.remove('highlight');
+            }
+        }
+    }
+
+    function clearHighlights() {
+        var rows = document.querySelectorAll('table tr');
+        for (var i = 1; i < rows.length; i++) {
+            rows[i].classList.remove('highlight');
+        }
+    }
+</script>
 
 </body>
 </html>
