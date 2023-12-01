@@ -16,7 +16,7 @@ $result = $conn->query($sql_select);
 
 if ($result->num_rows > 0) {
     // Book exists, so update the record
-    $random_date = date('Y-m-d', strtotime('+'.mt_rand(1, 200).' days'));
+    $random_date = date('Y-m-d', strtotime('+'.mt_rand(20, 200).' days'));
     $sql_update_libary = "UPDATE libary SET pupil_id = '$pupil_id', hand_in = '$random_date' WHERE book_name = '$book_name'";
     
     if ($conn->query($sql_update_libary) === TRUE) {
