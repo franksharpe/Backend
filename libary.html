@@ -8,9 +8,28 @@
 </head>
 <h2><u>libary</u></h2>
 <h3>Insert Book:</h3>
+
+<script>
+    document.getElementById("myForm").addEventListener("submit", validateForm);
+       function validateForm() {
+    var pupil_id = document.forms["myForm"]["pupil_id"].value;
+    var book_name = document.forms["myForm"]["book_name"].value;
+
+    if (pupil_id === "") {
+               alert("Pupil ID must be filled out");
+               return false;
+           }
+
+           if (book_name === "") {
+               alert("Book Name must be filled out");
+               return false;
+           }
+   }
+   </script>
+
 <body>
    
-    <form   action="libary db.php" method="post">
+    <form id="myForm" onsubmit="return validateForm()"   action="libary db.php" method="post">
         
         <label for="pupil_id">Pupil ID:</label>
         <input type="number" name="pupil_id" id="pupil_id" required placeholder="Pupil ID"><br>

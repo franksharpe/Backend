@@ -8,9 +8,56 @@
 </head>
 <h2><u>Teacher</u></h2>
 <h3>Please Fill out below:</h3>
+<script>
+    document.getElementById("myForm").addEventListener("submit", validateForm);
+    function validateForm() {
+        var fname = document.forms["myForm"]["fname"].value;
+        var lname = document.forms["myForm"]["lname"].value;
+        var phone = document.forms["myForm"]["phone"].value;
+        var address = document.forms["myForm"]["address"].value;
+        var nameRegex = /^[A-Za-z\s]+$/;
+
+        if (fname === "") {
+            alert("First name must be filled out");
+            return false;
+        }
+
+        if (!nameRegex.test(fname)) {
+            alert("First name must contain only letters and spaces");
+            return false;
+        }
+
+        if (lname === "") {
+            alert("Last name must be filled out");
+            return false;
+        }
+
+        if (!nameRegex.test(lname)) {
+            alert("Last name must contain only letters and spaces");
+            return false;
+        }
+
+        if (phone === "") {
+            alert("Please Fill in phone number");
+            return false;
+        }
+
+        if (phone.length !== 11) {
+            alert("Phone number must be 11 digits");
+            return false;
+        }
+        if (address === "") {
+            alert("Please put in your address");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 <body>
     
-    <form action="teacher db.php" method="post">
+    <form id="myForm" onsubmit="return validateForm()" action="teacher db.php" method="post">
         <label for="fname">First Name:</label>
         <input type="text" name="fname" id="fname" required placeholder="First Name"><br>
 <br>
