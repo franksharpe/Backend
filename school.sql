@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 11:14 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Dec 04, 2023 at 04:36 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,21 +30,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `classes` (
   `classid` int(11) NOT NULL,
   `class_name` varchar(50) DEFAULT NULL,
-  `teacherid` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `teacherid` int(11) DEFAULT NULL,
+  `class_capacity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `classes`
 --
 
-INSERT INTO `classes` (`classid`, `class_name`, `teacherid`) VALUES
-(1, 'class 1', 4),
-(2, 'class 2 ', 5),
-(3, 'class 3 ', 6),
-(4, 'class 4 ', 7),
-(5, 'class 5 ', 8),
-(6, 'class 6', 9),
-(7, 'class 7', 10);
+INSERT INTO `classes` (`classid`, `class_name`, `teacherid`, `class_capacity`) VALUES
+(1, 'class 1', 4, 0),
+(2, 'class 2 ', 5, 0),
+(3, 'class 3 ', 6, 0),
+(4, 'class 4 ', 7, 0),
+(5, 'class 5 ', 8, 0),
+(6, 'class 6', 9, 0),
+(7, 'class 7', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -57,7 +58,7 @@ CREATE TABLE `libary` (
   `book_name` varchar(50) NOT NULL,
   `pupil_id` int(11) DEFAULT NULL,
   `hand_in` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `libary`
@@ -79,7 +80,7 @@ CREATE TABLE `medical infomation` (
   `medical_id` int(11) NOT NULL,
   `pupil_id` int(11) NOT NULL,
   `medical_info` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,7 @@ CREATE TABLE `money` (
   `dinner_id` int(11) NOT NULL,
   `pupil_id` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `money`
@@ -112,8 +113,9 @@ CREATE TABLE `parents` (
   `fname` varchar(255) DEFAULT NULL,
   `lname` varchar(255) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `pupil_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `pupil_id` int(11) DEFAULT NULL,
+  `parent_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -131,14 +133,7 @@ CREATE TABLE `pupils` (
   `book_id` int(11) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
   `medical_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pupils`
---
-
-INSERT INTO `pupils` (`pupil_id`, `classid`, `fname`, `lname`, `address`, `dinner_id`, `book_id`, `birthday`, `medical_id`) VALUES
-(29, 2, 'test', 'test', 'test', NULL, NULL, '0001-01-01', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -153,7 +148,7 @@ CREATE TABLE `ta` (
   `address` varchar(100) DEFAULT NULL,
   `salary` float DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ta`
@@ -178,7 +173,7 @@ CREATE TABLE `teachers` (
   `phone` varchar(11) DEFAULT NULL,
   `salary` float DEFAULT NULL,
   `ta_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `teachers`
@@ -333,21 +328,6 @@ ALTER TABLE `money`
 --
 ALTER TABLE `parents`
   ADD CONSTRAINT `parents_ibfk_1` FOREIGN KEY (`pupil_id`) REFERENCES `pupils` (`pupil_id`);
-
---
--- Constraints for table `pupils`
---
-ALTER TABLE `pupils`
-  ADD CONSTRAINT `classes_FK_1` FOREIGN KEY (`classid`) REFERENCES `classes` (`classid`),
-  ADD CONSTRAINT `meical_id` FOREIGN KEY (`medical_id`) REFERENCES `medical_information` (`medical_id`),
-  ADD CONSTRAINT `pupils_ibfk_2` FOREIGN KEY (`dinner_id`) REFERENCES `money` (`dinner_id`),
-  ADD CONSTRAINT `pupils_ibfk_3` FOREIGN KEY (`book_id`) REFERENCES `libary` (`book_id`);
-
---
--- Constraints for table `teachers`
---
-ALTER TABLE `teachers`
-  ADD CONSTRAINT `teachers_ibfk_1` FOREIGN KEY (`ta_id`) REFERENCES `ta` (`ta_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
