@@ -51,18 +51,25 @@
             margin-bottom: 10px;
         }
 
-        input[type="button"] {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px; 
+  }
 
-        input[type="button"]:hover {
-            background-color: #2980b9;
-        }
+  #next, #return {
+        background-color: #236591;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    #next, #return:hover {
+        background-color: #2980b9;
+    }
 
        
     </style>
@@ -119,7 +126,10 @@
       <input type="radio" name="cand" value="fr"> Library<br><br>
       <input type="radio" name="cand" value="ex"> Dinner<br><br>
   
-      <input type="button" onclick="updateLink()" value="Next" />
+      <div class="button-container">
+        <input type="reset" id="return" value="Return" onclick="location.href='home.html'" />
+        <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
+    </div>
   </form>
   
   </body>

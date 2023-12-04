@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2023 at 04:36 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Generation Time: Dec 04, 2023 at 06:44 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,20 +32,20 @@ CREATE TABLE `classes` (
   `class_name` varchar(50) DEFAULT NULL,
   `teacherid` int(11) DEFAULT NULL,
   `class_capacity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `classes`
 --
 
 INSERT INTO `classes` (`classid`, `class_name`, `teacherid`, `class_capacity`) VALUES
-(1, 'class 1', 4, 0),
-(2, 'class 2 ', 5, 0),
-(3, 'class 3 ', 6, 0),
-(4, 'class 4 ', 7, 0),
-(5, 'class 5 ', 8, 0),
-(6, 'class 6', 9, 0),
-(7, 'class 7', 10, 0);
+(1, 'Reception Year', 4, 3),
+(2, 'Year 1', 5, 3),
+(3, 'Year 2', 6, 3),
+(4, 'Year 3', 7, 3),
+(5, 'Year 4', 8, 3),
+(6, 'Year 5', 9, 3),
+(7, 'Year 6', 10, 3);
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE `libary` (
   `book_name` varchar(50) NOT NULL,
   `pupil_id` int(11) DEFAULT NULL,
   `hand_in` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `libary`
@@ -73,14 +73,21 @@ INSERT INTO `libary` (`book_id`, `book_name`, `pupil_id`, `hand_in`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `medical infomation`
+-- Table structure for table `medical_information`
 --
 
-CREATE TABLE `medical infomation` (
+CREATE TABLE `medical_information` (
   `medical_id` int(11) NOT NULL,
-  `pupil_id` int(11) NOT NULL,
-  `medical_info` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `pupil_id` int(11) DEFAULT NULL,
+  `medical_info` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `medical_information`
+--
+
+INSERT INTO `medical_information` (`medical_id`, `pupil_id`, `medical_info`) VALUES
+(0, 31, 'N/A');
 
 -- --------------------------------------------------------
 
@@ -92,15 +99,7 @@ CREATE TABLE `money` (
   `dinner_id` int(11) NOT NULL,
   `pupil_id` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `money`
---
-
-INSERT INTO `money` (`dinner_id`, `pupil_id`, `amount`) VALUES
-(10, NULL, NULL),
-(11, NULL, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -113,9 +112,8 @@ CREATE TABLE `parents` (
   `fname` varchar(255) DEFAULT NULL,
   `lname` varchar(255) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `pupil_id` int(11) DEFAULT NULL,
-  `parent_count` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `pupil_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,8 +130,16 @@ CREATE TABLE `pupils` (
   `dinner_id` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
+  `parent_count` int(11) NOT NULL,
   `medical_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pupils`
+--
+
+INSERT INTO `pupils` (`pupil_id`, `classid`, `fname`, `lname`, `address`, `dinner_id`, `book_id`, `birthday`, `parent_count`, `medical_id`) VALUES
+(31, 1, 'Frank', 'Sharpe', '73 clifton road, ll29 9sp ', NULL, NULL, '2018-12-13', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -148,7 +154,7 @@ CREATE TABLE `ta` (
   `address` varchar(100) DEFAULT NULL,
   `salary` float DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ta`
@@ -173,7 +179,7 @@ CREATE TABLE `teachers` (
   `phone` varchar(11) DEFAULT NULL,
   `salary` float DEFAULT NULL,
   `ta_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `teachers`
@@ -207,10 +213,11 @@ ALTER TABLE `libary`
   ADD KEY `pupil_id` (`pupil_id`);
 
 --
--- Indexes for table `medical infomation`
+-- Indexes for table `medical_information`
 --
-ALTER TABLE `medical infomation`
-  ADD PRIMARY KEY (`medical_id`);
+ALTER TABLE `medical_information`
+  ADD PRIMARY KEY (`medical_id`),
+  ADD KEY `pupil_id` (`pupil_id`);
 
 --
 -- Indexes for table `money`
@@ -234,7 +241,7 @@ ALTER TABLE `pupils`
   ADD KEY `dinner_id` (`dinner_id`),
   ADD KEY `book_id` (`book_id`),
   ADD KEY `classes_FK_1` (`classid`),
-  ADD KEY `meical_id` (`medical_id`);
+  ADD KEY `fk_pupils_medical` (`medical_id`);
 
 --
 -- Indexes for table `ta`
@@ -266,12 +273,6 @@ ALTER TABLE `libary`
   MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `medical infomation`
---
-ALTER TABLE `medical infomation`
-  MODIFY `medical_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `money`
 --
 ALTER TABLE `money`
@@ -287,7 +288,7 @@ ALTER TABLE `parents`
 -- AUTO_INCREMENT for table `pupils`
 --
 ALTER TABLE `pupils`
-  MODIFY `pupil_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `pupil_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ta`
@@ -318,6 +319,12 @@ ALTER TABLE `libary`
   ADD CONSTRAINT `libary_ibfk_1` FOREIGN KEY (`pupil_id`) REFERENCES `pupils` (`pupil_id`);
 
 --
+-- Constraints for table `medical_information`
+--
+ALTER TABLE `medical_information`
+  ADD CONSTRAINT `medical_information_ibfk_1` FOREIGN KEY (`pupil_id`) REFERENCES `pupils` (`pupil_id`);
+
+--
 -- Constraints for table `money`
 --
 ALTER TABLE `money`
@@ -328,6 +335,12 @@ ALTER TABLE `money`
 --
 ALTER TABLE `parents`
   ADD CONSTRAINT `parents_ibfk_1` FOREIGN KEY (`pupil_id`) REFERENCES `pupils` (`pupil_id`);
+
+--
+-- Constraints for table `pupils`
+--
+ALTER TABLE `pupils`
+  ADD CONSTRAINT `fk_pupils_medical` FOREIGN KEY (`medical_id`) REFERENCES `medical_information` (`medical_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

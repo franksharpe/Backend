@@ -63,34 +63,33 @@
             background-color: yellow;
             cursor: pointer;
         }
+
         .update-form input[type="number"] {
-    padding: 8px;
-    width: 80px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-right: 10px;
-}
+            padding: 8px;
+            width: 80px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
 
-.update-form button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        .update-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-.update-form button:hover {
-    background-color: #45a049;
-}
+        .update-form button:hover {
+            background-color: #45a049;
+        }
 
-
-.update-form {
-    display: flex;
-    align-items: center;
-}
-
+        .update-form {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -118,13 +117,22 @@ if ($conn->connect_error) {
 if (isset($_GET['action']) && $_GET['action'] === 'remove_teacher' && isset($_GET['classid'])) {
     $classId = $_GET['classid'];
 
-    // Update the teacherid to null in the classes table
-    $updateSql = "UPDATE classes SET teacherid = NULL WHERE classid = $classId";
-    if ($conn->query($updateSql) === TRUE) {
-        echo "<script>alert('Teacher ID removed successfully.');</script>";
+    // Update the teacherid to null in the classes table using prepared statement
+    $updateSql = "UPDATE classes SET teacherid = NULL WHERE classid = ?";
+    $stmt = $conn->prepare($updateSql);
+
+    // Bind parameters
+    $stmt->bind_param("i", $classId);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        echo "<script>window.location.reload();</script>";
     } else {
-        echo "<script>alert('Error removing Teacher ID: " . $conn->error . "');</script>";
+        echo "<script>alert('Error removing Teacher ID: " . $stmt->error . "');</script>";
     }
+
+    // Close the statement
+    $stmt->close();
 }
 
 // Handle Add Teacher ID
@@ -133,19 +141,29 @@ if (isset($_POST['classid']) && isset($_POST['teacherid'])) {
     $teacherId = $_POST['teacherid'];
 
     // Check if the teacher is already assigned to another class
-    $checkQuery = "SELECT * FROM classes WHERE teacherID = '$teacherId'";
-    $checkResult = mysqli_query($conn, $checkQuery);
+    $checkQuery = "SELECT * FROM classes WHERE teacherID = ?";
+    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt->bind_param("s", $teacherId);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
 
-    if (mysqli_num_rows($checkResult) > 0) {
+    if ($checkResult->num_rows > 0) {
         echo "The teacher is already assigned to another class<br>";
     } else {
-        // Update the teacherid in the classes table
-        $updateSql = "UPDATE classes SET teacherid = $teacherId WHERE classid = $classId";
-        if ($conn->query($updateSql) === TRUE) {
-            echo "<script>alert('Teacher ID added successfully.');</script>";
+        // Update the teacherid in the classes table using prepared statement
+        $updateSql = "UPDATE classes SET teacherid = ? WHERE classid = ?";
+        $updateStmt = $conn->prepare($updateSql);
+        $updateStmt->bind_param("ii", $teacherId, $classId);
+
+        if ($updateStmt->execute()) {
+            echo "<script>
+                window.location.reload();
+              </script>";
         } else {
-            echo "<script>alert('Error adding Teacher ID: " . $conn->error . "');</script>";
+            echo "<script>alert('Error adding Teacher ID: " . $updateStmt->error . "');</script>";
         }
+
+        $updateStmt->close();
     }
 }
 
@@ -165,57 +183,79 @@ if ($result->num_rows > 0) {
     <th>Class Capacity</th>
     <th>Remove Teacher ID</th>
     <th>Add Teacher ID</th>
-    <th>Class Capacity</th>
+    <th>Update Class Capacity</th>
     </tr>";
-
-
 
     while ($row = $result->fetch_assoc()) {
-    echo "<tr>
-        <td>{$row['classid']}</td>
-        <td>{$row['class_name']}</td>
-        <td class='teacherIdCell' data-id='{$row['teacherid']}'>{$row['teacherid']}</td>
-        <td>{$row['class_capacity']}</td>
-        <td>
-            <button class='updateButton' onclick=\"location.href='classview.php?action=remove_teacher&classid={$row['classid']}'\">
-                Remove
-            </button>
-        </td>
-        <td>
-            <form method='post'>
-                <input type='hidden' name='classid' value='{$row['classid']}'>
-                <label for='teacherIdSelect{$row['classid']}'>Select Teacher ID:</label>
-                <select id='teacherIdSelect{$row['classid']}' name='teacherid'>
-                    <option value=''>Select Teacher ID</option>";
+        echo "<tr>
+            <td>{$row['classid']}</td>
+            <td>{$row['class_name']}</td>
+            <td class='teacherIdCell' data-id='{$row['teacherid']}'>{$row['teacherid']}</td>
+            <td>{$row['class_capacity']}</td>
+            <td>
+                <button class='updateButton' onclick=\"location.href='classview.php?action=remove_teacher&classid={$row['classid']}'\">
+                    Remove
+                </button>
+            </td>
+            <td>
+                <form method='post'>
+                    <input type='hidden' name='classid' value='{$row['classid']}'>
+                    <label for='teacherIdSelect{$row['classid']}'>Select Teacher ID:</label>
+                    <select id='teacherIdSelect{$row['classid']}' name='teacherid'>
+                        <option value=''>Select Teacher ID</option>";
 
-    // Fetch teacher IDs from the teachers table
-    $teacherSql = "SELECT teacherid FROM teachers";
-    $teacherResult = $conn->query($teacherSql);
+        // Fetch teacher IDs from the teachers table
+        $teacherSql = "SELECT teacherid FROM teachers";
+        $teacherResult = $conn->query($teacherSql);
 
-    if ($teacherResult->num_rows > 0) {
-        while ($teacherRow = $teacherResult->fetch_assoc()) {
-            echo "<option value='{$teacherRow['teacherid']}'>{$teacherRow['teacherid']}</option>";
+        if ($teacherResult->num_rows > 0) {
+            while ($teacherRow = $teacherResult->fetch_assoc()) {
+                echo "<option value='{$teacherRow['teacherid']}'>{$teacherRow['teacherid']}</option>";
+            }
         }
-    }
 
-    echo "</select>
-                <button type='submit' class='addTaButton'>Add</button>
-            </form>
-        </td>
-        <td class='update-form'>
-            <form method='post'>
-                <input type='hidden' name='classid' value='{$row['classid']}'>
-                <label for='classCapacityInput{$row['classid']}'>Update Class Capacity:</label>
-                <input type='number' id='classCapacityInput{$row['classid']}' name='classcapacity' min='0'>
-                <button type='submit' class='updateButton'>Update</button>
-            </form>
-        </td>
-    </tr>";
-}
+        echo "</select>
+                    <button type='submit' class='addTaButton'>Add</button>
+                </form>
+            </td>
+            <td class='update-form'>
+                <form method='post'>
+                    <input type='hidden' name='classid' value='{$row['classid']}'>
+                    <label for='classCapacityInput{$row['classid']}'>Update Class Capacity:</label>
+                    <input type='number' id='classCapacityInput{$row['classid']}' name='classcapacity' min='0'>
+                    <button type='submit' class='updateButton'>Update</button>
+                </form>
+            </td>
+        </tr>";
+    }
     echo "</table>";
     echo "</div>";
 } else {
     echo "0 results";
+}
+
+if (isset($_POST['classid']) && isset($_POST['classcapacity'])) {
+    $classId = $_POST['classid'];
+    $classCapacity = $_POST['classcapacity'];
+
+    // Update the class capacity in the classes table using prepared statement
+    $updateCapacitySql = "UPDATE classes SET class_capacity = ? WHERE classid = ?";
+    $stmt = $conn->prepare($updateCapacitySql);
+
+    // Bind parameters
+    $stmt->bind_param("ii", $classCapacity, $classId);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        echo "<script>
+                window.location.reload();
+              </script>";
+    } else {
+        echo "<script>alert('Error updating class capacity: " . $stmt->error . "');</script>";
+    }
+
+    // Close the statement
+    $stmt->close();
 }
 
 // Close connection
@@ -242,7 +282,7 @@ $conn->close();
                 var url = 'index.php';
                 var selectedId = target.getAttribute('data-id');
                 setTimeout(function () {
-                window.location.href = `${url}?selectedId=${selectedId}`;
+                    window.location.href = `${url}?selectedId=${selectedId}`;
                 }, 100);
             }
         });
