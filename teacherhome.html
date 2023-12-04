@@ -41,16 +41,17 @@
         margin-bottom: 10px;
     }
 
-    input[type="button"] {
-        background-color: #3498db;
+    input[type="button"], input[type="reset"] {
+        background-color: #236591;
         color: #fff;
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-right: 10px; 
     }
 
-    input[type="button"]:hover {
+    input[type="button"]:hover, input[type="reset"]:hover {
         background-color: #2980b9;
     }
 
@@ -74,6 +75,7 @@ function updateLink(value) {
 <form>
     <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Teacher<br><br>
     <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> View Records<br><br>
+    <input type="reset" value="Return" onclick="location.href='home.html'" />
     <input id="next" type="button" value="Next" />
 </form>
 

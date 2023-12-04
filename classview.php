@@ -6,6 +6,20 @@
     <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <style>
+        body {
+            background-color: #F1F1F1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        h3 {
+            background-color: #1C4E80;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
+
         .table-container {
             width: 100%;
             margin-top: 20px;
@@ -24,15 +38,10 @@
 
         .school-table th {
             background-color: #1C4E80;
-            color: black;
+            color: white;
         }
 
-        body {
-            background-color: #F1F1F1;
-            font-family: Arial, sans-serif;
-        }
-
-        .updateButton {
+        .updateButton, .addTaButton {
             background-color: #ff6f6f;
             color: white;
             border: none;
@@ -48,20 +57,10 @@
 
         .addTaButton {
             background-color: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            margin: 2px 2px;
-            cursor: pointer;
-            border-radius: 4px;
         }
 
         .highlight {
-            background-color: yellow;  
+            background-color: yellow;
             cursor: pointer;
         }
     </style>
@@ -69,6 +68,9 @@
 <body>
 
 <h3><u>Class Record</u></h3>
+<br>
+<br>
+<br>
 
 <?php
 // Connect to MySQL server

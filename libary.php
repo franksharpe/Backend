@@ -7,9 +7,24 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Library Records</u></h3>
     <style>
+        body {
+            background-color: #F1F1F1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        h3 {
+            background-color: #1C4E80;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
         }
 
         th, td {
@@ -20,10 +35,7 @@
 
         th {
             background-color: #1C4E80;
-        }
-
-        body {
-            background-color: #F1F1F1;
+            color: #fff;
         }
 
         .highlight {
@@ -35,10 +47,24 @@
             padding: 10px;
             background-color: #f0f0f0;
             text-align: center;
+            margin-top: 20px;
         }
 
         #search-input {
             padding: 5px;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
         }
     </style>
 </head>

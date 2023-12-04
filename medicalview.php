@@ -7,9 +7,24 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Medical Records</u></h3>
     <style>
+        body {
+            background-color: #F1F1F1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        h3 {
+            text-align: center;
+            background-color: #1C4E80;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
         }
 
         th, td {
@@ -20,25 +35,33 @@
 
         th {
             background-color: #1C4E80;
-        }
-
-        body {
-            background-color: #F1F1F1;
+            color: #fff;
         }
 
         .highlight {
             background-color: yellow;
-            cursor: pointer;
         }
 
         #find-bar {
             padding: 10px;
             background-color: #f0f0f0;
             text-align: center;
+            margin-top: 20px;
         }
 
         #search-input {
             padding: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+        }
+
+        button {
+            cursor: pointer;
         }
     </style>
 </head>

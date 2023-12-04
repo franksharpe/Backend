@@ -32,19 +32,27 @@
       margin-bottom: 10px;
   }
 
-  #next {
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+
+  .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px; 
   }
 
-  #next:hover {
-      background-color: #2980b9;
-  }
+  #next, #return {
+        background-color: #236591;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+    }
+
+    #next, #return:hover {
+        background-color: #2980b9;
+    }
 </style>
+
 
 <h3><u>Please Choose Option Below:</u></h3>
 <body>
@@ -64,7 +72,11 @@ function updateLink(value) {
 <form>
     <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Pupil<br><br>
     <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Existing Pupil<br><br>
-    <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
+    
+    <div class="button-container">
+        <input type="reset" id="return" value="Return" onclick="location.href='home.html'" />
+        <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
+    </div>
   </form>
 
    

@@ -6,42 +6,86 @@
     <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
+        h3 {
             background-color: #1C4E80;
-        }
-        body {
-            background-color: #F1F1F1;
-        }
-
-        .highlight {
-            background-color: yellow;  
-            cursor: pointer;
-        }
-        #find-bar {
+            color: #fff;
             padding: 10px;
-            background-color: #f0f0f0;
             text-align: center;
+            margin: 0;
         }
+        
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-        #search-input {
-            padding: 5px;
-        }
-    </style>
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #1C4E80;
+        color: #fff; 
+    }
+
+    body {
+        background-color: #F1F1F1;
+        font-family: Arial, sans-serif; 
+        margin: 0; 
+    }
+
+    .highlight {
+        background-color: yellow;
+        cursor: pointer;
+    }
+
+    #find-bar {
+        padding: 10px;
+        background-color: #f0f0f0;
+        text-align: center;
+    }
+
+    #search-input {
+        padding: 5px;
+    }
+
+    a {
+        text-decoration: none; 
+        text-align: center;
+    }
+
+    button {
+        cursor: pointer;
+        align-items: center;
+    }
+    .t {
+        text-align: center;
+    }
+
+    .y {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .goback-btn {
+  padding: 10px 20px;
+  font-size: 6px;
+  cursor: pointer;
+  background-color: grey;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+}
+</style>
 </head>
 <body>
-
-<h3><u>Pupils Record</u></h3>
+<button class="goback-btn" onclick="goBack()">Go Back</button>
+<h3 class="t"><u>Pupils Record</u></h3>
 
 <div id="find-bar">
     <input type="text" id="search-input" placeholder="Type to search">
@@ -63,7 +107,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 echo "</br>";  
-echo '<a href="pupil.html"><button>Add New Pupil</button></a><br>';
+echo '<a class="y" href="pupil.html"><button>Add New Pupil</button></a><br>';
 echo "</br>";  
 echo "</br>";  
 // Query to retrieve pupils data
@@ -167,6 +211,9 @@ $conn->close();
             tableCells[i].classList.remove('highlight');
         }
     }
+    function goBack() {
+  window.history.back();
+}
 </script>
 
 </body>

@@ -8,13 +8,34 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Teacher Records</u></h3>
     <style>
+        h3 {
+            background-color: #1C4E80;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F1F1F1;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -22,15 +43,12 @@
 
         th {
             background-color: #1C4E80;
-        }
-
-        body {
-            background-color: #F1F1F1;
-        }
-
-        .updateButton {
-            background-color: #ff6f6f;
             color: white;
+        }
+
+        .updateButton, .addTaButton {
+            background-color: #cc2b2b;
+            color: #fff;
             border: none;
             padding: 5px 10px;
             text-align: center;
@@ -44,16 +62,10 @@
 
         .addTaButton {
             background-color: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            margin: 2px 2px;
-            cursor: pointer;
-            border-radius: 4px;
+        }
+
+        .updateButton:hover, .addTaButton:hover {
+            background-color: #2980b9;
         }
 
         .highlight {
@@ -65,6 +77,7 @@
             padding: 10px;
             background-color: #f0f0f0;
             text-align: center;
+            margin-top: 20px;
         }
 
         #search-input {

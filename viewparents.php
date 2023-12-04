@@ -7,6 +7,20 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <h3><u>Parents Records</u></h3>
     <style>
+        body {
+            background-color: #F1F1F1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        h3 {
+            text-align: center;
+            background-color: #1C4E80;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -20,12 +34,10 @@
 
         th {
             background-color: #1C4E80;
-        }
-        body {
-            background-color: #F1F1F1;
+            color: #fff;
         }
 
-        .removeButton {
+        .removeButton, .ard {
             background-color: #ff6f6f;
             color: white;
             border: none;
@@ -38,23 +50,16 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .ard {
             background-color: green;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            margin: 2px 2px;
-            cursor: pointer;
-            border-radius: 4px;
         }
+
         .highlight {
-            background-color: yellow;  
+            background-color: yellow;
             cursor: pointer;
         }
+
         #find-bar {
             padding: 10px;
             background-color: #f0f0f0;
@@ -63,6 +68,27 @@
 
         #search-input {
             padding: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+        }
+
+        button {
+            cursor: pointer;
+            align-items: center;
+        }
+
+        .t {
+            text-align: center;
+        }
+
+        .y {
+            align-items: center;
+            text-align: center;
         }
     </style>
 </head>
