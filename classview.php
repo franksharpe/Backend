@@ -117,21 +117,21 @@ if ($conn->connect_error) {
 if (isset($_GET['action']) && $_GET['action'] === 'remove_teacher' && isset($_GET['classid'])) {
     $classId = $_GET['classid'];
 
-    // Update the teacherid to null in the classes table using prepared statement
+    // Update the teacherid to null in the classes table 
     $updateSql = "UPDATE classes SET teacherid = NULL WHERE classid = ?";
     $stmt = $conn->prepare($updateSql);
 
-    // Bind parameters
+
     $stmt->bind_param("i", $classId);
 
-    // Execute the statement
+    // reload page
     if ($stmt->execute()) {
         echo "<script>window.location.reload();</script>";
     } else {
         echo "<script>alert('Error removing Teacher ID: " . $stmt->error . "');</script>";
     }
 
-    // Close the statement
+    
     $stmt->close();
 }
 
@@ -140,7 +140,7 @@ if (isset($_POST['classid']) && isset($_POST['teacherid'])) {
     $classId = $_POST['classid'];
     $teacherId = $_POST['teacherid'];
 
-    // Check if the teacher is already assigned to another class
+    // Check if the teacher is already in another class
     $checkQuery = "SELECT * FROM classes WHERE teacherID = ?";
     $checkStmt = $conn->prepare($checkQuery);
     $checkStmt->bind_param("s", $teacherId);
@@ -150,7 +150,7 @@ if (isset($_POST['classid']) && isset($_POST['teacherid'])) {
     if ($checkResult->num_rows > 0) {
         echo "The teacher is already assigned to another class<br>";
     } else {
-        // Update the teacherid in the classes table using prepared statement
+        // Update the teacherid in the classes table 
         $updateSql = "UPDATE classes SET teacherid = ? WHERE classid = ?";
         $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bind_param("ii", $teacherId, $classId);
@@ -167,7 +167,7 @@ if (isset($_POST['classid']) && isset($_POST['teacherid'])) {
     }
 }
 
-// Query to retrieve pupils data
+// get data
 $sql = "SELECT classid, class_name, teacherid, class_capacity FROM classes";
 $result = $conn->query($sql);
 
@@ -204,7 +204,7 @@ if ($result->num_rows > 0) {
                     <select id='teacherIdSelect{$row['classid']}' name='teacherid'>
                         <option value=''>Select Teacher ID</option>";
 
-        // Fetch teacher IDs from the teachers table
+        // get ID from table
         $teacherSql = "SELECT teacherid FROM teachers";
         $teacherResult = $conn->query($teacherSql);
 
