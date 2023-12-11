@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2023 at 06:44 PM
+-- Generation Time: Dec 11, 2023 at 11:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,10 +65,10 @@ CREATE TABLE `libary` (
 --
 
 INSERT INTO `libary` (`book_id`, `book_name`, `pupil_id`, `hand_in`) VALUES
-(4, 'To Kill a Mockingbird', NULL, NULL),
-(5, '1984', NULL, NULL),
-(6, 'The Lord Of The Rings', NULL, NULL),
-(7, 'Batman: The Killing Joke', NULL, NULL);
+(4, 'To Kill a Mockingbird', 43, '2024-04-01'),
+(5, '1984', 39, '2024-06-14'),
+(6, 'The Lord Of The Rings', 36, '2024-04-13'),
+(7, 'Batman: The Killing Joke', 34, '2024-01-29');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,17 @@ CREATE TABLE `medical_information` (
 --
 
 INSERT INTO `medical_information` (`medical_id`, `pupil_id`, `medical_info`) VALUES
-(0, 31, 'N/A');
+(2, 33, 'Alergic to egg'),
+(3, 34, 'Alergic to Gluten'),
+(4, 35, 'N/A'),
+(5, 36, 'alergic to Dairy'),
+(6, 37, 'N/A'),
+(7, 38, 'N/A'),
+(8, 39, 'Alergic to Gluten'),
+(9, 40, 'Alergic to Peanuts'),
+(10, 41, 'alergic to Dairy'),
+(11, 42, 'N/A'),
+(12, 43, 'N/A');
 
 -- --------------------------------------------------------
 
@@ -100,6 +110,23 @@ CREATE TABLE `money` (
   `pupil_id` int(11) DEFAULT NULL,
   `amount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `money`
+--
+
+INSERT INTO `money` (`dinner_id`, `pupil_id`, `amount`) VALUES
+(12, 43, 5.32),
+(13, 42, 1.23),
+(14, 41, 3.34),
+(15, 40, 9.5),
+(16, 39, 0.5),
+(17, 38, 2.95),
+(18, 37, 3.38),
+(19, 36, 5.44),
+(20, 35, 2.12),
+(21, 34, 4.55),
+(22, 33, 6.6);
 
 -- --------------------------------------------------------
 
@@ -114,6 +141,23 @@ CREATE TABLE `parents` (
   `phone` varchar(11) DEFAULT NULL,
   `pupil_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `parents`
+--
+
+INSERT INTO `parents` (`Parent_id`, `fname`, `lname`, `phone`, `pupil_id`) VALUES
+(4, 'Emily ', 'Turner', '07700123456', 40),
+(5, 'Daniel', 'Harris', '07812345678', 33),
+(6, 'Rebecca', ' Patel', '07923456789', 34),
+(7, ' Andrew ', 'Robinson', '07654321987', 34),
+(8, 'Sarah', ' Green', '07890234567', 42),
+(9, 'Matthew', ' Green', '07543210876', 42),
+(10, 'Samantha ', 'Ward', '07789543210', 35),
+(11, 'James ', 'Clarke', '07987654321', 39),
+(12, 'Lauren', ' King', '07678901234', 39),
+(13, 'Ryan ', 'Lewis', '07876543210', 36),
+(14, 'Olivia', ' Mitchell', '07711223344', 33);
 
 -- --------------------------------------------------------
 
@@ -139,7 +183,17 @@ CREATE TABLE `pupils` (
 --
 
 INSERT INTO `pupils` (`pupil_id`, `classid`, `fname`, `lname`, `address`, `dinner_id`, `book_id`, `birthday`, `parent_count`, `medical_id`) VALUES
-(31, 1, 'Frank', 'Sharpe', '73 clifton road, ll29 9sp ', NULL, NULL, '2018-12-13', 0, 0);
+(33, 7, 'Aiden ', 'Clark', '19 Oak Close, Belfast, BT1 4NN', 22, NULL, '2011-11-07', 1, 2),
+(34, 1, 'Grace ', 'Lewis', '5 Birch Lane, Cardiff, CF10 1DS', 21, 7, '2019-01-14', 2, 3),
+(35, 2, 'Jack ', 'Evans', '8 Willow Crescent, Edinburgh, EH3 7TY', 20, NULL, '2017-05-16', 1, 4),
+(36, 3, 'Mia ', 'Walker', '10 Holly Road, Sheffield, S2 2BG', 19, 6, '2016-03-18', 1, 5),
+(37, 7, 'Mason ', 'Green', '14 Pine Close, Liverpool, L3 9PU', 18, NULL, '2012-04-05', 0, 6),
+(38, 7, 'Isabella ', ' White', '7 Birch Grove, Bristol, BS4 6FJ', 17, NULL, '2011-05-01', 0, 7),
+(39, 2, ' Jack', 'Clarke', '19 Oak Close, Belfast, BT1 4NN', 16, 5, '2017-11-07', 2, 8),
+(40, 3, ' Jack', 'Turner', '23 Beech Lane, Newcastle, NE1 6QW', 15, NULL, '2016-12-30', 2, 9),
+(41, 4, 'Mia ', 'Lewis', '56 Cedar Street, Leeds, LS1 4DP', 14, NULL, '2015-08-14', 0, 10),
+(42, 5, 'Noah ', 'Green', ' 14 Pine Close, Liverpool, L3 9PU', 13, NULL, '2015-08-14', 2, 11),
+(43, 6, 'Ruby', 'White', '7 Birch Grove, Bristol, BS4 6FJ', 12, 4, '2014-08-14', 0, 12);
 
 -- --------------------------------------------------------
 
@@ -193,6 +247,27 @@ INSERT INTO `teachers` (`teacherid`, `fname`, `lname`, `address`, `phone`, `sala
 (8, 'Fabio', 'Viera', '44 New Road,INVERNESS,IV32 0UA', '0551358583', 41, NULL),
 (9, 'Martin', 'Odegaard', '998 Main Road,WEST LONDON, W8 1TX', '07536584756', 47, NULL),
 (10, 'Oleksandr', 'Zinchenko', '3 Kingsway,SOUTH WEST LONDON, SW21 1SA', '07653476859', 34, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(3, 't', 't', 'student'),
+(4, 'test', 'test', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -257,6 +332,12 @@ ALTER TABLE `teachers`
   ADD KEY `ta_id` (`ta_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -273,22 +354,28 @@ ALTER TABLE `libary`
   MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `medical_information`
+--
+ALTER TABLE `medical_information`
+  MODIFY `medical_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `money`
 --
 ALTER TABLE `money`
-  MODIFY `dinner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `dinner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `parents`
 --
 ALTER TABLE `parents`
-  MODIFY `Parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `pupils`
 --
 ALTER TABLE `pupils`
-  MODIFY `pupil_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `pupil_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `ta`
@@ -301,6 +388,12 @@ ALTER TABLE `ta`
 --
 ALTER TABLE `teachers`
   MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
