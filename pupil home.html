@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School.</title>
+
+    <!-- icon for the tab -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
+
+<!-- CSS styles for the page -->
 <style>
-  body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-  }
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
 
-  h3 {
-      text-align: center;
-      text-decoration: underline;
-      margin-top: 20px;
-  }
+    h3 {
+        text-align: center;
+        text-decoration: underline;
+        margin-top: 20px;
+    }
 
-  form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-  }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
 
-  input[type="radio"] {
-      margin-bottom: 10px;
-  }
+    input[type="radio"] {
+        margin-bottom: 10px;
+    }
 
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
 
-  .button-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 15px; 
-  }
-
-  #next, #return {
+    #next, #return {
         background-color: #236591;
         color: #fff;
         padding: 10px 20px;
@@ -54,32 +58,35 @@
     }
 </style>
 
-
+<!-- Heading for the page -->
 <h3><u>Please Choose Option Below:</u></h3>
+
+<!-- Body -->
 <body>
   
-    <form action="" method="post">
-       
-<script>
-function updateLink(value) {
-  if (value === "fr") {
-    document.getElementById("next").setAttribute('onclick', "location.href='pupil.html'");
-  } else if (value === "ex") {
-    document.getElementById("next").setAttribute('onclick', "location.href='existing pupil.html'");
-  }
-}
-</script>
 
-<form>
-    <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Pupil<br><br>
-    <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Existing Pupil<br><br>
+        <!-- JavaScript function to update links based on radio button selection -->
+        <script>
+            function updateLink(value) {
+                if (value === "fr") {
+                    document.getElementById("next").setAttribute('onclick', "location.href='pupil.html'");
+                } else if (value === "ex") {
+                    document.getElementById("next").setAttribute('onclick', "location.href='existing pupil.html'");
+                }
+            }
+        </script>
+
+        <!-- Radio buttons for choosing between new and existing pupils -->
+        <form>
+            <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Pupil<br><br>
+            <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Existing Pupil<br><br>
+
+            <!-- Container for buttons with Return and Next options -->
+            <div class="button-container">
+                <input type="reset" id="return" value="Return" onclick="location.href='home.html'" />
+                <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
+            </div>
+        </form>
     
-    <div class="button-container">
-        <input type="reset" id="return" value="Return" onclick="location.href='home.html'" />
-        <input id="next" type="button" onclick="location.href='pupil.html';" value="Next" />
-    </div>
-  </form>
-
-   
 </body>
 </html>

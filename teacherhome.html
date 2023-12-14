@@ -8,6 +8,7 @@
 </head>
 
 <style>
+    /* Styling for the page */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f0f0f0;
@@ -17,11 +18,13 @@
     }
 
     h3 {
+        /* Styling for the heading */
         margin-top: 20px;
         text-decoration: underline;
     }
 
     form {
+        /* Styling for the form */
         max-width: 400px;
         margin: 20px auto;
         background-color: #fff;
@@ -31,17 +34,21 @@
     }
 
     label {
+        /* Styling for labels */
         display: block;
         margin-top: 10px;
         font-weight: bold;
     }
 
     input[type="radio"] {
+        /* Styling for radio buttons */
         margin-top: 5px;
         margin-bottom: 10px;
     }
 
-    input[type="button"], input[type="reset"] {
+    input[type="button"],
+    input[type="reset"] {
+        /* Styling for buttons */
         background-color: #236591;
         color: #fff;
         padding: 10px 20px;
@@ -51,34 +58,47 @@
         margin-right: 10px; 
     }
 
-    input[type="button"]:hover, input[type="reset"]:hover {
+    input[type="button"]:hover,
+    input[type="reset"]:hover {
+        /* Styling for button hover effect */
         background-color: #2980b9;
     }
 
 </style>
 
-    <h3><u>Please Choose Below:</u></h3>
+<!-- Heading for the options -->
+<h3><u>Please Choose Below:</u></h3>
 <body>
 
 <script>
+// JavaScript function to update the link based on radio button selection
 function updateLink(value) {
     if (value === "fr") {
+        // If "New Teacher" is selected, set the link to 'teacher.html'
         document.getElementById("next").setAttribute('onclick', "location.href='teacher.html'");
     } else if (value === "ex") {
+        // If "View Records" is selected, set the link to 'viewhome.html'
         document.getElementById("next").setAttribute('onclick', "location.href='viewhome.html'")
     }
 }
-        </script>
+</script>
 
 <body>
 
+<!-- Form with radio buttons and buttons for navigation -->
 <form>
+    <!-- Radio button for "New Teacher" option -->
     <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> New Teacher<br><br>
+    
+    <!-- Radio button for "View Records" option -->
     <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> View Records<br><br>
+    
+    <!-- Button to reset the form and return to the home page -->
     <input type="reset" value="Return" onclick="location.href='home.html'" />
+    
+    <!-- Button to navigate to the next page based on the selected radio button -->
     <input id="next" type="button" value="Next" />
 </form>
 
-   
 </body>
 </html>

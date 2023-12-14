@@ -21,7 +21,7 @@ $birthday = $_POST['birthday'];
 $classname = trim($_POST['classid']);
 $medical_info = $_POST['medical_info'];
 
-// Fetch the classid and class_capacity based on the classname using a prepared statement
+// get the classid and class_capacity based on the classname using a prepared statement
 $classQuery = $conn->prepare("SELECT classid, class_capacity FROM classes WHERE class_name = ?");
 $classQuery->bind_param("s", $classname);
 $classQuery->execute();
@@ -41,14 +41,14 @@ if ($classResult->num_rows > 0) {
     $currentPupilCount = $pupilCountRow['pupil_count'];
 
     if ($currentPupilCount < $class_capacity) {
-        // Insert data into the "pupils" table using a prepared statement
+        // Insert data into the "pupils" table 
         $sqlPupils = $conn->prepare("INSERT INTO pupils (fname, lname, address, birthday, classid) VALUES (?, ?, ?, ?, ?)");
         $sqlPupils->bind_param("ssssi", $fname, $lname, $address, $birthday, $classid);
 
         if ($sqlPupils->execute()) {
             $lastPupilID = $conn->insert_id;  // Get the last inserted pupil_id
 
-            // Insert data into the "medical_information" table using a prepared statement
+            // Insert data into the "medical_information" table 
             $sqlMedical = $conn->prepare("INSERT INTO medical_information (pupil_id, medical_info) VALUES (?, ?)");
             $sqlMedical->bind_param("is", $lastPupilID, $medical_info);
 
@@ -62,33 +62,39 @@ if ($classResult->num_rows > 0) {
                 $stmt_update_pupils->execute();
 
                 echo "<br>Thank You For Joining St Alphonsus Primary School. <br> Your Pupil ID is: $lastPupilID <br> Your Class: $classname";
+                echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
             } else {
                 echo "Error inserting into medical_information table: " . $sqlMedical->error;
+                echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
             }
 
-            // Close the prepared statements for medical information and pupils
+            // Close medical information and pupils
             $stmt_update_pupils->close();
             $sqlMedical->close();
             $sqlPupils->close();
         } else {
             echo "Error inserting into pupils table: " . $sqlPupils->error;
+            echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
         }
     } else {
         echo "Class capacity is full. Cannot add more pupils to the class.";
+        echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
     }
 
-    // Close pupil count query
+    // Close pupil count 
     $pupilCountQuery->close();
 } else {
     echo "Class not found";
     echo "Class Name: " . $classname . "<br>";
     echo "Number of Rows: " . $classResult->num_rows . "<br>";
+    echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
 }
 
 if ($classQuery->error) {
     echo "Class Query Error: " . $classQuery->error;
+    echo '<br><input type="reset" id="return" value="Return" onclick="location.href=\'home.html\'" /> <br>';
 }
 
-// Close prepared statements and connection
+// Close connection
 $classQuery->close();
 $conn->close();

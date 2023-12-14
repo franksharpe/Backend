@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title of the webpage -->
     <title>St Alphonsus Primary School</title>
+
+    <!-- icon link -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
 
 <style>
+    /* Styling for the body and general layout */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f0f0f0;
@@ -16,15 +22,18 @@
         text-align: center;
     }
 
+    /* Styling for the heading 2 */
     h2 {
         margin-top: 20px;
         text-decoration: underline;
     }
 
+    /* Styling for heading 3 */
     h3 {
         margin-top: 10px;
     }
 
+    /* Styling for the form container */
     form {
         max-width: 400px;
         margin: 20px auto;
@@ -34,12 +43,14 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
+    /* Styling for labels in the form */
     label {
         display: block;
         margin-top: 10px;
         font-weight: bold;
     }
 
+    /* Styling for number input fields */
     input[type="number"] {
         width: 100%;
         padding: 8px;
@@ -50,6 +61,7 @@
         border-radius: 4px;
     }
 
+    /* Styling for number input fields with step attribute */
     input[type="number"][step=".01"] {
         width: 100%;
         padding: 8px;
@@ -60,6 +72,7 @@
         border-radius: 4px;
     }
 
+    /* Styling for the submit button */
     input[type="submit"] {
         background-color: #3498db;
         color: #fff;
@@ -69,10 +82,12 @@
         cursor: pointer;
     }
 
+    /* Styling for the submit button on hover */
     input[type="submit"]:hover {
         background-color: #2980b9;
     }
 
+    /* Styling for the paragraph with opacity */
     p {
         opacity: 0.5;
         margin-top: 5px;
@@ -80,41 +95,47 @@
 
 </style>
 
+<!-- Heading -->
 <h2><u>Dinner Money</u></h2>
+<!-- Subheading  -->
 <h3>Enter Amount below:</h3>
 
 <script>
-     document.getElementById("myForm").addEventListener("submit", validateForm);
-        function validateForm() {
-     var pupil_id = document.forms["myForm"]["pupil_id"].value;
-     var amount = document.forms["myForm"]["amount"].value;
+    // Adding an event listener for form submission and calling the validateForm function
+    document.getElementById("myForm").addEventListener("submit", validateForm);
 
-     if (pupil_id === "") {
-                alert("Pupil ID must be filled out");
-                return false;
-            }
-            
-        
+    // Function to validate the form before submission
+    function validateForm() {
+        var pupil_id = document.forms["myForm"]["pupil_id"].value;
+        var amount = document.forms["myForm"]["amount"].value;
 
+        // Check if Pupil ID is empty
+        if (pupil_id === "") {
+            alert("Pupil ID must be filled out");
+            return false;
+        }
 
+   
 
     }
-    </script>
+</script>
 
 <body>
- <form id="myForm" onsubmit="return validateForm()" action="dinner db.php" method="post">
+    <!-- Form for entering Pupil ID and Amount -->
+    <form id="myForm" onsubmit="return validateForm()" action="dinner db.php" method="post">
+        <!-- Input field for Pupil ID -->
         <label for="pupil_id">Pupil ID:</label>
         <input type="number" name="pupil_id" id="pupil_id" required placeholder="Pupil ID"><br>
         <br>
+        <!-- Input field for Amount with step attribute allowing decimal values -->
         <label for="amount">Amount:</label>
         <input type="number" step=".01" name="amount" id="amount" required placeholder="Amount">
 
+        <!-- Paragraph with additional information and reduced opacity -->
         <br><p style="opacity: 50%;">Put value amount 0 to view amount</p>
 
+        <!-- Submit button for submitting the form -->
         <input type="submit" value="Submit">
     </form>
 </body>
 </html>
-
-
-

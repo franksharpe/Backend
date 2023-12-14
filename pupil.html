@@ -1,87 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School.</title>
+
+    <!-- icon for the tab -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
 <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+    /* Styling for the page */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
 
-        h2 {
-            margin-top: 20px;
-        }
+    h2 {
+        margin-top: 20px;
+    }
 
-        h3 {
-            margin-top: 10px;
-        }
+    h3 {
+        margin-top: 10px;
+    }
 
-        form {
-            max-width: 400px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    /* Styling for the form */
+    form {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+    /* Styling for form labels and inputs */
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
 
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
-        input[type="submit"] {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    /* Styling for the submit button */
+    input[type="submit"] {
+        background-color: #3498db;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        input[type="submit"]:hover {
-            background-color: #2980b9;
-        }
-  </style>      
+    input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+</style>      
 <body>
-
+    <!-- Heading for the page -->
     <h2><u>Pupil Signup</u></h2>
     <h3>Insert Details Below:</h3>
 
+    <!-- Form for pupil signup sends to php file after validating-->
     <form id="myForm" onsubmit="return validateForm()" action="schooldb.php" method="post">
         <br>
+        <!-- First Name -->
         <label for="fname">First Name:</label><br>
         <input type="text" name="fname" id="fname" required placeholder="First Name"><br>
         <br>
+
+        <!-- Last Name  -->
         <label for="lname">Last Name:</label><br>
         <input type="text" name="lname" id="lname" required placeholder="Last Name"><br>
         <br>
+        
+        <!-- Address -->
         <label for="address">Address:</label><br>
         <input type="text" name="address" id="address" required placeholder="Address"><br>
         <br>
+
+        <!-- Birthday -->
         <label for="birthday">Birthday:</label><br>
         <input type="date" name="birthday" id="birthday" required placeholder="Birthday"><br>
         <br>
+
+        <!-- Class selector -->
         <label for="classid">Class:</label><br>
         <select name="classid" id="classid" required>
             <option value="class">class</option>    
@@ -94,17 +111,26 @@
             <option value="Year 6">Year 6</option>
         </select><br>
         <br>
+
+        <!-- Medical Information  -->
         <label for="medical_info">Medical Info:</label>
         <br>
         <input type="text" name="medical_info" id="medical_info" required placeholder="Medical Info"><br>
         <br>
+
+        <!-- Submit -->
         <input type="submit" value="Submit">
+
     </form>
 
+    <!-- JavaScript script for form validation -->
     <script>
+        
         document.getElementById("myForm").addEventListener("submit", validateForm);
 
+        // Function to validate the form
         function validateForm() {
+            // Get values from form inputs
             var fname = document.forms["myForm"]["fname"].value;
             var lname = document.forms["myForm"]["lname"].value;
             var classid = document.forms["myForm"]["classid"].value;
@@ -117,45 +143,60 @@
             var monthDiff = today.getMonth() - birthDate.getMonth();
             var nameRegex = /^[A-Za-z\s]+$/;
 
+            // Validate First Name
             if (fname === "") {
                 alert("First name must be filled out");
                 return false;
             }
 
+            // validate no letters or spaces
             if (!nameRegex.test(fname)) {
                 alert("First name must contain only letters and spaces");
                 return false;
             }
 
+            // Validate Last Name
             if (lname === "") {
                 alert("Last name must be filled out");
                 return false;
             }
 
+            // validate no letters or spaces
             if (!nameRegex.test(lname)) {
                 alert("Last name must contain only letters and spaces");
                 return false;
             }
 
+            // Validate Class selection
             if (classid === "class") {
                 alert("Please select a class.");
                 return false;
             }
 
+            // Validate Address
             if (address === "") {
                 alert("Please put in your address");
                 return false;
             }
 
+            // Validate Birthday
             if (birthday === "") {
                 alert("Please put in your date of birth");
                 return false;
             }
 
-            if (!validateAge(birthDate, classid)) {
+
+           // Validate birthday using a separate function
+           if (!validateAge(birthDate, classid)) {
                 return false;
             }
 
+            // Adjust age if the birthdate hasn't happened yet this year
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // age validation based on the selected class
             switch (classid) {
                 case "Reception Year":
                     if (age < 4 || age > 5) {
@@ -201,18 +242,22 @@
                     break;
             }
 
+            // Return true if all validations pass
             return true;
         }
 
+        // Function to validate age for specific class requirements
         function validateAge(birthDate, classid) {
             var today = new Date();
             var age = today.getFullYear() - birthDate.getFullYear();
             var monthDiff = today.getMonth() - birthDate.getMonth();
 
+            // Adjust age if the birthdate hasn't occurred yet this year
             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
 
+            // Customize age validation based on the selected class
             switch (classid) {
                 case "Reception Year":
                     if (age < 4 || age > 5) {
@@ -258,10 +303,9 @@
                     break;
             }
 
+            // Return true if the age is valid for the selected class, otherwise return false
             return true;
-    }
-
-
+        }
     </script>
 
 </body>

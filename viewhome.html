@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
 <style>
+    /* Styling for the page */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f0f0f0;
@@ -34,6 +35,7 @@
     }
 
     input[type="button"], input[type="reset"] {
+        /* Styling for buttons */
         background-color: #236591;
         color: #fff;
         padding: 10px 20px;
@@ -44,13 +46,17 @@
     }
 
     input[type="button"]:hover, input[type="reset"]:hover {
+        /* Styling for button hover effect */
         background-color: #2980b9;
     }
 </style>
 
 <body>
+    <!-- JavaScript functions for updating links and checking passwords -->
     <script>
+        // Function to update the link based on the selected radio button
         function updateLink(value) {
+            // Update the onclick attribute of the "Next" button
             if (value === "fr") {
                 document.getElementById("next").setAttribute('onclick', "checkPasswordAndRedirect('index.php', 'teacher')");
             } else if (value === "ex") {
@@ -68,31 +74,35 @@
             }
         }
     
+        // Function to prompt for a password and redirect if correct
         function checkPasswordAndRedirect(destination, role) {
-            var password = prompt("Please enter the password:");
+            var password = prompt("Please enter the password (record):");
     
             var teacherPassword = "record";
-            var parentPassword = "parent";  
+            var parentPassword = "record";  
     
+            // Check if the entered password matches the role-specific password
             if ((role === 'teacher' && password === teacherPassword) || (role === 'parent' && password === parentPassword)) {
+                // Redirect to the specified destination if the password is correct
                 location.href = destination;
             } else {
+                // Display an alert for incorrect password and deny access
                 alert("Incorrect password. Access denied.");
             }
         }
     </script>
 
+    <!-- Form for selecting record type -->
     <form>
         <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)">Teacher Records<br><br>
         <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)">Pupil Records<br><br>
-        <input type="radio" name="cand" value="tt" onclick="updateLink(this.value)">Libary Records<br><br>
+        <input type="radio" name="cand" value="tt" onclick="updateLink(this.value)">Library Records<br><br>
         <input type="radio" name="cand" value="yt" onclick="updateLink(this.value)">Dinner Money Records<br><br>
         <input type="radio" name="cand" value="rt" onclick="updateLink(this.value)">Parents Records<br><br>
         <input type="radio" name="cand" value="e" onclick="updateLink(this.value)">Medical Records<br><br>
         <input type="radio" name="cand" value="y" onclick="updateLink(this.value)">Class Records<br><br>
         <input type="reset" value="Return" onclick="location.href='teacherhome.html'" />
         <input id="next" type="button" value="Next" />
-      
     </form>
 </body>
 </html>

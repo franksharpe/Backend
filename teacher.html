@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School.</title>
+
+    <!-- icon -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
 <style>
+    /* Styling for the page */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f0f0f0;
@@ -41,6 +44,7 @@
 
     input[type="text"],
     input[type="number"] {
+        /* Styling for text and number input fields */
         width: 100%;
         padding: 8px;
         margin-top: 5px;
@@ -51,6 +55,7 @@
     }
 
     input[type="submit"] {
+        /* Styling for submit button */
         background-color: #3498db;
         color: #fff;
         padding: 10px 20px;
@@ -60,76 +65,96 @@
     }
 
     input[type="submit"]:hover {
+        /* Styling for submit button on hover */
         background-color: #2980b9;
     }
 
-   
 </style>
 
+<!-- Heading -->
 <h2><u>Teacher</u></h2>
+<!-- Subheading -->
 <h3>Please Fill out below:</h3>
+
 <script>
+    // JavaScript form validation
     document.getElementById("myForm").addEventListener("submit", validateForm);
+
     function validateForm() {
+        // Get form input values
         var fname = document.forms["myForm"]["fname"].value;
         var lname = document.forms["myForm"]["lname"].value;
         var phone = document.forms["myForm"]["phone"].value;
         var address = document.forms["myForm"]["address"].value;
-        var nameRegex = /^[A-Za-z\s]+$/;
+        var nameRegex = /^[A-Za-z\s]+$/;  // Regular expression for name validation
 
+        // Validate first name
         if (fname === "") {
             alert("First name must be filled out");
             return false;
         }
 
+        // Check if first name contains only letters and spaces
         if (!nameRegex.test(fname)) {
             alert("First name must contain only letters and spaces");
             return false;
         }
 
+        // Validate last name
         if (lname === "") {
             alert("Last name must be filled out");
             return false;
         }
 
+        // Check if last name contains only letters and spaces
         if (!nameRegex.test(lname)) {
             alert("Last name must contain only letters and spaces");
             return false;
         }
 
+        // Validate phone number
         if (phone === "") {
             alert("Please Fill in phone number");
             return false;
         }
 
+        // Check if phone number is 11 digits
         if (phone.length !== 11) {
             alert("Phone number must be 11 digits");
             return false;
         }
+
+        // Validate address
         if (address === "") {
             alert("Please put in your address");
             return false;
         }
 
+        // If all validations pass, return true to submit the form
         return true;
     }
 </script>
 
 <body>
-    
+    <!-- Form for Teacher data entry -->
     <form id="myForm" onsubmit="return validateForm()" action="teacher db.php" method="post">
+        <!-- first name -->
         <label for="fname">First Name:</label>
         <input type="text" name="fname" id="fname" required placeholder="First Name"><br>
-<br>
+
+        <!-- last name -->
         <label for="lname">Last Name:</label>
         <input type="text" name="lname" id="lname" required placeholder="Last Name"><br>
-<br>
+
+        <!-- address -->
         <label for="address">Address:</label>
         <input type="text" name="address" id="address" required placeholder="Address"><br>
-<br>
-        <label for="phone">Phone Number:</label>
-        <input type="text" name="phone" id="phone" placeholder="Phone Number" placeholder="Phone Number"><br><br>
 
+        <!-- phone number -->
+        <label for="phone">Phone Number:</label>
+        <input type="text" name="phone" id="phone" placeholder="Phone Number"><br><br>
+
+        <!-- Submit -->
         <input type="submit" value="Submit">
     </form>
 </body>

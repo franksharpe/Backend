@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School</title>
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+    <!-- Styling for the page -->
     <h3><u>Teacher Records</u></h3>
     <style>
         h3 {
@@ -46,6 +47,7 @@
             color: white;
         }
 
+        /* Styling for buttons */
         .updateButton, .addTaButton {
             background-color: #cc2b2b;
             color: #fff;
@@ -89,6 +91,7 @@
 <body>
 
 <div id="find-bar">
+    <!-- Search bar for finding and highlighting text in the table -->
     <input type="text" id="search-input" placeholder="Type to search">
     <button onclick="findText()">Find</button>
     <button onclick="clearHighlights()">Clear</button>
@@ -108,6 +111,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 echo "</br>";
+// Link to add a new teacher
 echo '<a href="teacher.html"><button>Add New Teacher</button></a><br>';
 echo "</br>";
 echo "</br>";

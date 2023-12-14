@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St Alphonsus Primary School</title>
+
+    <!-- icon for the tab  -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+
 </head>
-<h1 class="yt">St Alphonsus Primary School</h1>
+
+<!-- Body of the HTML document -->
+<body style="background-color: aliceblue">
+
+    <!-- School logo positioned in the top-right corner -->
+    <img src="favicon_io/android-chrome-512x512.png" class="logo">
+
+    <!-- Heading for the page -->
+    <h1 class="yt">St Alphonsus Primary School</h1>
+
+    <!-- Subheading with an underline -->
     <h3><u>Please Choose Below:</u></h3>
 
+    <!-- CSS styles for the page -->
     <style>
         body {
             background-color: aliceblue;
@@ -58,54 +72,44 @@
         }
     </style>
 
-
-
-<body style="background-color: aliceblue">
-
-<img src="favicon_io/android-chrome-512x512.png"  class="logo" >
-
-    <form action="" method="post">
-      <script>
+    <!-- JavaScript functions to handle radio button selections and password checks -->
+    <script>
         function updateLink(value) {
+            // Update the 'Next' button's onclick attribute based on the selected radio button
             if (value === "fr") {
                 document.getElementById("next").setAttribute('onclick', "location.href='pupil home.html'");
             } else if (value === "ex") {
                 document.getElementById("next").setAttribute('onclick', "location.href='parent.html'");
             } else if (value === "ft") {
-                
                 document.getElementById("next").setAttribute('onclick', "checkPasswordAndRedirect('teacherhome.html', 'teacher')");
             } else if (value === "ta") {
-                
                 document.getElementById("next").setAttribute('onclick', "checkPasswordAndRedirect('ta.html', 'ta')");
             }
         }
 
         function checkPasswordAndRedirect(destination, role) {
-            var password = prompt("Please enter the password Teacher:");
+            // ask for password if right goes to next page if not if takes you back
+            var password = prompt("Please enter the password (teacher):");
 
             var teacherPassword = "teacher";
             var taPassword = "teacher";
 
             if ((role === 'teacher' && password === teacherPassword) || (role === 'ta' && password === taPassword)) {
-             
-                location.href = destination;
+                location.href = destination; // Redirect 
             } else {
-                
-                alert("Incorrect password. Access denied.");
+                alert("Incorrect password. Access denied."); // Show an alert for incorrect password
             }
         }
     </script>
-</head>
-<body>
 
-<form>
-    <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> Pupil<br><br>
-    <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Parent<br><br>
-    <input type="radio" name="cand" value="ft" onclick="updateLink(this.value)"> Teacher<br><br>
-    <input type="radio" name="cand" value="ta" onclick="updateLink(this.value)"> Teaching Assistant<br><br>
-    <input id="next" type="button" value="Next" />
-</form>
+    <!-- Radio button form to choose -->
+    <form>
+        <input type="radio" name="cand" value="fr" onclick="updateLink(this.value)"> Pupil<br><br>
+        <input type="radio" name="cand" value="ex" onclick="updateLink(this.value)"> Parent<br><br>
+        <input type="radio" name="cand" value="ft" onclick="updateLink(this.value)"> Teacher<br><br>
+        <input type="radio" name="cand" value="ta" onclick="updateLink(this.value)"> Teaching Assistant<br><br>
+        <input id="next" type="button" value="Next" />
+    </form>
 
-   
 </body>
 </html>

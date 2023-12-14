@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
 </head>
 <style>
+    /* Styling for the page */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f0f0f0;
@@ -62,75 +63,87 @@
     input[type="submit"]:hover {
         background-color: #2980b9;
     }
-
 </style>
 
+<!-- HTML Headings -->
 <h2><u>Parent</u></h2>
 <h3>Insert Data below:</h3>
 
+<!-- JavaScript Validation Script -->
 <script>
-        document.getElementById("myForm").addEventListener("submit", validateForm);
-        function validateForm() {
-            var fname = document.forms["myForm"]["fname"].value;
-            var lname = document.forms["myForm"]["lname"].value;
-            var phone = document.forms["myForm"]["phone"].value;
-            var pupil_id = document.forms["myForm"]["pupil_id"].value;
-            var nameRegex = /^[A-Za-z\s]+$/;
-    
-            if (fname === "") {
-                alert("First name must be filled out");
-                return false;
-            }
-    
-            if (!nameRegex.test(fname)) {
-                alert("First name must contain only letters and spaces");
-                return false;
-            }
-    
-            if (lname === "") {
-                alert("Last name must be filled out");
-                return false;
-            }
-    
-            if (!nameRegex.test(lname)) {
-                alert("Last name must contain only letters and spaces");
-                return false;
-            }
-    
-            if (phone === "") {
-                alert("Please Fill in phone number");
-                return false;
-            }
+    // Event listener for form submission with validation
+    document.getElementById("myForm").addEventListener("submit", validateForm);
 
-            if (phone.length !== 11) {
-                alert("Phone number must be 11 digits");
-                return false;
-            }
-            if (pupil_id === ""){
-                alert("Please fill out Pupil ID")
-                return false;
-            }
-    
-            return true;
+    function validateForm() {
+        // Retrieving form input values
+        var fname = document.forms["myForm"]["fname"].value;
+        var lname = document.forms["myForm"]["lname"].value;
+        var phone = document.forms["myForm"]["phone"].value;
+        var pupil_id = document.forms["myForm"]["pupil_id"].value;
+        var nameRegex = /^[A-Za-z\s]+$/; // Regular expression for letters and spaces
+
+        // Validation for First Name
+        if (fname === "") {
+            alert("First name must be filled out");
+            return false;
         }
-    </script>
+
+        if (!nameRegex.test(fname)) {
+            alert("First name must contain only letters and spaces");
+            return false;
+        }
+
+        // Validation for Last Name
+        if (lname === "") {
+            alert("Last name must be filled out");
+            return false;
+        }
+
+        // validate no space ect
+        if (!nameRegex.test(lname)) {
+            alert("Last name must contain only letters and spaces");
+            return false;
+        }
+
+        // Validation for Phone Number
+        if (phone === "") {
+            alert("Please fill in phone number");
+            return false;
+        }
+
+        // validate phone length
+        if (phone.length !== 11) {
+            alert("Phone number must be 11 digits");
+            return false;
+        }
+
+        // Validation for Pupil ID
+        if (pupil_id === "") {
+            alert("Please fill out Pupil ID");
+            return false;
+        }
+
+        // If all validations pass, the form is submitted
+        return true;
+    }
+</script>
 
 <body>
-  
+    <!-- Form for submitting parent data -->
     <form id="myForm" onsubmit="return validateForm()" action="parentdb.php" method="post">
         <label for="fname">First Name:</label>
-        <input type="text" name="fname" id="fname" required  placeholder="First Name"><br>
-<br>
+        <input type="text" name="fname" id="fname" required placeholder="First Name"><br>
+
         <label for="lname">Last Name:</label>
-        <input type="text" name="lname" id="lname" required  placeholder="last Name"><br>
-<br>
+        <input type="text" name="lname" id="lname" required placeholder="Last Name"><br>
+
         <label for="phone">Phone Number:</label>
         <input type="text" name="phone" id="phone" placeholder="Phone Number"><br>
-<br>
+
         <label for="pupil_id">Pupil ID:</label>
         <input type="number" name="pupil_id" id="pupil_id" placeholder="Pupil ID"><br>
-<br>
 
+        <!-- Submit button -->
         <input type="submit" value="Submit">
     </form>
 </body>

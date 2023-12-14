@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,21 +73,45 @@
 
 <script>
     document.getElementById("myForm").addEventListener("submit", validateForm);
-       function validateForm() {
-    var pupil_id = document.forms["myForm"]["pupil_id"].value;
-    var book_name = document.forms["myForm"]["book_name"].value;
+    function validateForm() {
+        var pupil_id = document.forms["myForm"]["pupil_id"].value;
+        var book_name = document.forms["myForm"]["book_name"].value;
 
-    if (pupil_id === "") {
-               alert("Pupil ID must be filled out");
-               return false;
-           }
+        if (pupil_id === "") {
+            alert("Pupil ID must be filled out");
+            return false;
+        }
 
-           if (book_name === "") {
-               alert("Book Name must be filled out");
-               return false;
-           }
-   }
-   </script>
+        if (book_name === "") {
+            alert("Book Name must be filled out");
+            return false;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var bookSelect = document.getElementById("book_name");
+
+        // Fetch book names from the server
+        fetch("get_book_name.php") // <-- Updated file name here
+            .then(response => response.json())
+            .then(data => {
+                // Populate the dropdown with book names
+                data.forEach(function(book) {
+                    var option = document.createElement("option");
+                    option.value = book;
+                    option.text = book;
+                    bookSelect.appendChild(option);
+                });
+            });
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            
+        });
+    });
+</script>
+
+
+   
 
 <body>
    
@@ -96,7 +122,9 @@
         <br>
 
         <label for="book_name">Book Name:</label>
-        <input type="text" name="book_name" id="book_name" required placeholder="Book Name"><br> <br>
+        <select name="book_name" id="book_name" required>
+
+        </select><br><br>
 
         <input type="submit" value="Submit">
     </form>
